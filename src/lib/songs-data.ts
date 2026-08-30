@@ -62,7 +62,7 @@ export const INITIAL_SONGS: Song[] = [
     title: 'Enter Sandman',
     artist: 'Metallica',
     year: 1991,
-    youtube_id: 'CD-E-MQZaeg',
+    youtube_id: 'XZuM4zFg-60',
     preview_start: 65
   },
 {
@@ -78,7 +78,7 @@ export const INITIAL_SONGS: Song[] = [
     title: '(Everything I Do) I Do It For You',
     artist: 'Bryan Adams',
     year: 1991,
-    youtube_id: 'ZGoWtY_h4xo',
+    youtube_id: 'aQh8Bi3aEm8',
     preview_start: 70
   },
 {
@@ -94,7 +94,7 @@ export const INITIAL_SONGS: Song[] = [
     title: 'Baby Got Back',
     artist: 'Sir Mix-A-Lot',
     year: 1992,
-    youtube_id: 'REvdzNTrEQI',
+    youtube_id: 'Bhado79yAAQ',
     preview_start: 17
   },
 {
@@ -118,10 +118,10 @@ export const INITIAL_SONGS: Song[] = [
     title: 'Jump Around',
     artist: 'House of Pain',
     year: 1992,
-    youtube_id: 'XNzPOLYcgC0',
+    youtube_id: 'MdxCfAb-ROM',
     preview_start: 35
   },
-{ id: '1993-1', title: 'What Is Love', artist: 'Haddaway', year: 1993, youtube_id: 'HEXWRTEENIL', preview_start: 55 },
+{ id: '1993-1', title: 'What Is Love', artist: 'Haddaway', year: 1993, youtube_id: 'OFNrN_6Ta5I', preview_start: 55 },
 { id: '1993-2', title: 'Creep', artist: 'Radiohead', year: 1993, youtube_id: 'XFkzRNyygfk', preview_start: 58 },
 { id: '1993-3', title: 'All That She Wants', artist: 'Ace of Base', year: 1993, youtube_id: 'd73tiBBzvFM', preview_start: 61 },
 { id: '1993-4', title: 'Loser', artist: 'Beck', year: 1993, youtube_id: 'YgSPaXgAdzE', preview_start: 57 },
@@ -160,14 +160,7 @@ export const INITIAL_SONGS: Song[] = [
     youtube_id: 'oKOtzIo-uYw',
     preview_start: 60
   },
-{
-    id: '1996-4',
-    title: 'Because You Loved Me',
-    artist: 'Celine Dion',
-    year: 1996,
-    youtube_id: 'P_NrmKf663Q',
-    preview_start: 70
-  },
+
 {
     id: '1996-5',
     title: 'Un-Break My Heart',
@@ -224,14 +217,7 @@ export const INITIAL_SONGS: Song[] = [
     youtube_id: 'C-u5WLJ9Yk4',
     preview_start: 52
   },
-{
-    id: '1998-2',
-    title: 'Believe',
-    artist: 'Cher',
-    year: 1998,
-    youtube_id: '4p0chD8U8fA',
-    preview_start: 56
-  },
+
 {
     id: '1998-3',
     title: 'Iris',
@@ -248,14 +234,7 @@ export const INITIAL_SONGS: Song[] = [
     youtube_id: 'JkK8g6FMEXE',
     preview_start: 63
   },
-{
-    id: '1998-5',
-    title: 'Pretty Fly (For a White Guy)',
-    artist: 'The Offspring',
-    year: 1998,
-    youtube_id: 'nzY2Qcu5i2A',
-    preview_start: 35
-  },
+
 { id: "1999-1", title: "Smooth", artist: "Santana ft. Rob Thomas", year: 1999, youtube_id: "6Whgn_iE5uc", preview_start: 58 },
 { id: "1999-2", title: "I Want It That Way", artist: "Backstreet Boys", year: 1999, youtube_id: "4fndeDfaWCg", preview_start: 68 },
 { id: "1999-3", title: "Livin' la Vida Loca", artist: "Ricky Martin", year: 1999, youtube_id: "p47fEXGabaY", preview_start: 56 },
@@ -271,14 +250,7 @@ export const INITIAL_SONGS: Song[] = [
 { id: "2001-3", title: "Fallin'", artist: "Alicia Keys", year: 2001, youtube_id: "UrdlO4DfO6c", preview_start: 65 },
 { id: "2001-4", title: "Whenever, Wherever", artist: "Shakira", year: 2001, youtube_id: "weRHyjj34ZE", preview_start: 60 },
 { id: "2001-5", title: "Get The Party Started", artist: "P!nk", year: 2001, youtube_id: "mW1dbiD_zDk", preview_start: 45 },
-{
-    id: 'lose-yourself',
-    title: 'Lose Yourself',
-    artist: 'Eminem',
-    year: 2002,
-    youtube_id: '_YCGtT_PNYQ',
-    preview_start: 75
-  },
+
 {
     id: 'complicated',
     title: 'Complicated',
@@ -383,17 +355,10 @@ export const INITIAL_SONGS: Song[] = [
     youtube_id: 'LOZuxwVk7TU',
     preview_start: 45
   },
-{
-    id: 'mr-brightside',
-    title: 'Mr. Brightside',
-    artist: 'The Killers',
-    year: 2004,
-    youtube_id: 'gGdGFtwcjVQ',
-    preview_start: 50
-  },
+
 { id: '2005-1', title: "You're Beautiful", artist: 'James Blunt', year: 2005, youtube_id: 'oofSnsGkops', preview_start: 45 },
 { id: '2005-2', title: 'Feel Good Inc.', artist: 'Gorillaz', year: 2005, youtube_id: 'HyHNuVaZJ-k', preview_start: 55 },
-{ id: '2005-3', title: 'Mr. Brightside', artist: 'The Killers', year: 2005, youtube_id: 'gGdGFtwPNUs', preview_start: 48 },
+
 { id: '2005-4', title: 'Fix You', artist: 'Coldplay', year: 2005, youtube_id: 'k4V3Mo61fJM', preview_start: 70 },
 { id: '2005-5', title: 'Gold Digger', artist: 'Kanye West', year: 2005, youtube_id: '6vwNcNOTVzY', preview_start: 42 },
 { id: '2006-1', title: "Hips Don't Lie", artist: 'Shakira', year: 2006, youtube_id: 'DUT5rEU6pqM', preview_start: 60 },
@@ -411,11 +376,11 @@ export const INITIAL_SONGS: Song[] = [
 { id: '2008-3', title: 'I\'m Yours', artist: 'Jason Mraz', year: 2008, youtube_id: 'EkHTsc9PU2A', preview_start: 60 },
 { id: '2008-4', title: 'Just Dance', artist: 'Lady Gaga ft. Colby O\'Donis', year: 2008, youtube_id: '2Abk1jAIGZU', preview_start: 52 },
 { id: '2008-5', title: 'I Kissed a Girl', artist: 'Katy Perry', year: 2008, youtube_id: 'tAp9BKosZXs', preview_start: 50 },
-{ id: '2009-1', title: 'I Gotta Feeling', artist: 'Black Eyed Peas', year: 2009, youtube_id: 'uSD4vshi2u4', preview_start: 40 },
+
 { id: '2009-2', title: 'Poker Face', artist: 'Lady Gaga', year: 2009, youtube_id: 'bESGLojNYSo', preview_start: 65 },
 { id: '2009-3', title: 'Bad Romance', artist: 'Lady Gaga', year: 2009, youtube_id: 'qrO4YZeyl0I', preview_start: 70 },
 { id: '2009-4', title: 'TiK ToK', artist: 'Kesha', year: 2009, youtube_id: 'iP6XpLQM2Cs', preview_start: 55 },
-{ id: '2009-5', title: 'Empire State of Mind', artist: 'Jay-Z ft. Alicia Keys', year: 2009, youtube_id: 'qsVNEwN10U0', preview_start: 68 },
+
 { id: '2010-1', title: 'Rolling in the Deep', artist: 'Adele', year: 2010, youtube_id: 'rYEDA3JcQqw', preview_start: 65 },
 { id: '2010-2', title: 'Firework', artist: 'Katy Perry', year: 2010, youtube_id: 'QGJuMBdaqIw', preview_start: 60 },
 { id: '2010-3', title: 'Love the Way You Lie', artist: 'Eminem ft. Rihanna', year: 2010, youtube_id: 'uelHwf8o7_U', preview_start: 45 },
@@ -613,14 +578,7 @@ export const INITIAL_SONGS: Song[] = [
     youtube_id: 'yzTuBuRdAyA',
     preview_start: 50
   },
-{
-    id: 'hotline-bling-2015',
-    title: 'Hotline Bling',
-    artist: 'Drake',
-    year: 2015,
-    youtube_id: 'uxjEOSvkSyI',
-    preview_start: 45
-  },
+
 {
     id: 'closer-2016',
     title: 'Closer',
@@ -629,14 +587,7 @@ export const INITIAL_SONGS: Song[] = [
     youtube_id: 'PT2_F-1esPk',
     preview_start: 55
   },
-{
-    id: 'starboy-2016',
-    title: 'Starboy',
-    artist: 'The Weeknd ft. Daft Punk',
-    year: 2016,
-    youtube_id: '34Na4j8HLjc',
-    preview_start: 60
-  },
+
 {
     id: 'work-2016',
     title: 'Work',
@@ -909,18 +860,18 @@ export const INITIAL_SONGS: Song[] = [
 { id: 'song-6', title: 'Dance The Night', artist: 'Dua Lipa', year: 2024, youtube_id: 'OiC1rgCPmUQ', preview_start: 45 },
 { id: 'song-7', title: 'What Was I Made For?', artist: 'Billie Eilish', year: 2024, youtube_id: 'cW8VLC9nnTo', preview_start: 55 },
 { id: 'song-8', title: 'vampire', artist: 'Olivia Rodrigo', year: 2024, youtube_id: 'RlPNh_PBZb4', preview_start: 40 },
-{ id: 'song-9', title: 'Paint The Town Red', artist: 'Doja Cat', year: 2024, youtube_id: 'm4_9TFeMf7U', preview_start: 30 },
-{ id: 'song-10', title: 'greedy', artist: 'Tate McRae', year: 2024, youtube_id: 'rW7yVlGzZ2I', preview_start: 35 },
+
+
 { id: 'song-11', title: 'Beautiful Things', artist: 'Benson Boone', year: 2025, youtube_id: 'Oa_RSwwpPaA', preview_start: 45 },
 { id: 'song-12', title: 'Lose Control', artist: 'Teddy Swims', year: 2025, youtube_id: 'GZ3zL7kT6_c', preview_start: 50 },
-{ id: 'song-13', title: 'Too Sweet', artist: 'Hozier', year: 2025, youtube_id: 'a-sX4EusXvY', preview_start: 35 },
+
 { id: 'song-14', title: 'Espresso', artist: 'Sabrina Carpenter', year: 2025, youtube_id: 'eVli-tstM5E', preview_start: 30 },
 { id: 'song-15', title: 'we can\'t be friends', artist: 'Ariana Grande', year: 2025, youtube_id: 'KNtJGQkC-WI', preview_start: 40 },
 { id: 'song-16', title: 'Not Like Us', artist: 'Kendrick Lamar', year: 2026, youtube_id: 'T6eK-2OQtew', preview_start: 30 },
-{ id: 'song-17', title: 'I Had Some Help', artist: 'Post Malone', year: 2026, youtube_id: 'xIHTH3UeL0c', preview_start: 45 },
-{ id: 'song-18', title: 'A Bar Song (Tipsy)', artist: 'Shaboozey', year: 2026, youtube_id: 't7bQwwqW-ww', preview_start: 35 },
+
+
 { id: 'song-19', title: 'BIRDS OF A FEATHER', artist: 'Billie Eilish', year: 2026, youtube_id: 'd5gf9dXbPi0', preview_start: 40 },
-{ id: 'song-20', title: 'APT.', artist: 'ROSÉ & Bruno Mars', year: 2026, youtube_id: 'ekhcCW-Z7IY', preview_start: 50 }
+
 ];
 
 export function getRandomSongs(count?: number): Song[] {
