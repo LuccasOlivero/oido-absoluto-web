@@ -282,15 +282,8 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
     );
 
     return (
-      <div
-        className="w-full flex items-center justify-center my-1"
-        style={{ height: '140px', position: 'relative' }}
-      >
-        <div
-          id="youtube-player-frame"
-          className="rounded-2xl shadow-xs overflow-hidden border border-stone-200"
-          style={{ width: '280px', height: '140px' }}
-        />
+      <div className="absolute -top-[9999px] -left-[9999px] w-0 h-0 opacity-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div id="youtube-player-frame" />
       </div>
     );
   }
