@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { SnippetDuration } from '@/types';
-import { Play, Square, Sparkles, Zap, Search, Minus, Plus, CheckCircle2 } from 'lucide-react';
+import { Play, Square, Sparkles, Zap, Search, CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Visualizer } from './Visualizer';
 import { sfx } from '@/lib/audio-engine';
@@ -42,12 +42,6 @@ export function UnifiedGameModule({
 }: UnifiedGameModuleProps) {
   const currentYear = maxYear;
 
-  // Generate decade steps dynamically up to current year
-  const decades: number[] = [];
-  for (let d = 1960; d <= currentYear; d += 10) {
-    decades.push(d);
-  }
-
   const snippets: {
     duration: SnippetDuration;
     label: string;
@@ -77,17 +71,6 @@ export function UnifiedGameModule({
       activeStyle: 'bg-emerald-50 border-emerald-300 text-emerald-900 ring-2 ring-emerald-200/70 shadow-xs'
     }
   ];
-
-  const handleStep = (step: number) => {
-    sfx.playClick();
-    const next = Math.max(minYear, Math.min(currentYear, year + step));
-    onYearChange(next);
-  };
-
-  const handleDecadeClick = (dec: number) => {
-    sfx.playClick();
-    onYearChange(Math.min(currentYear, dec));
-  };
 
   return (
     <div className="w-full bg-white border border-stone-200/90 rounded-3xl p-4 sm:p-7 shadow-xs flex flex-col gap-5 sm:gap-6">
@@ -228,65 +211,7 @@ export function UnifiedGameModule({
         </div>
 
         {/* Botones de ajuste fino (-5, -1, +1, +5) y décadas */}
-        <div className="w-full flex flex-col items-center gap-2">
-          {/* Fila de controles rápidos táctiles */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            <button
-              type="button"
-              disabled={disabled || year <= minYear}
-              onClick={() => handleStep(-5)}
-              className="px-3 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold border border-stone-200/80 active:scale-95 transition-all disabled:opacity-40 cursor-pointer min-w-[38px] text-center"
-            >
-              -5
-            </button>
-            <button
-              type="button"
-              disabled={disabled || year <= minYear}
-              onClick={() => handleStep(-1)}
-              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-200/80 active:scale-95 transition-all disabled:opacity-40 cursor-pointer min-w-[38px] flex items-center justify-center"
-            >
-              <Minus className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              disabled={disabled || year >= currentYear}
-              onClick={() => handleStep(1)}
-              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-200/80 active:scale-95 transition-all disabled:opacity-40 cursor-pointer min-w-[38px] flex items-center justify-center"
-            >
-              <Plus className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              disabled={disabled || year >= currentYear}
-              onClick={() => handleStep(5)}
-              className="px-3 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold border border-stone-200/80 active:scale-95 transition-all disabled:opacity-40 cursor-pointer min-w-[38px] text-center"
-            >
-              +5
-            </button>
-          </div>
-
-          {/* Atajos por décadas con scroll horizontal si es necesario en móviles */}
-          <div className="w-full flex items-center justify-center overflow-x-auto py-1 px-0.5 gap-1 scrollbar-none">
-            {decades.map((dec) => {
-              const isCurrentDecade = Math.floor(year / 10) * 10 === dec;
-              return (
-                <button
-                  key={dec}
-                  type="button"
-                  disabled={disabled}
-                  onClick={() => handleDecadeClick(dec)}
-                  className={`px-2 py-1 text-xs font-bold rounded-lg transition-all shrink-0 cursor-pointer ${
-                    isCurrentDecade
-                      ? 'bg-purple-600 text-white shadow-xs'
-                      : 'bg-stone-100 text-stone-600 hover:text-stone-900 active:bg-stone-200'
-                  }`}
-                >
-                  &apos;{dec.toString().slice(2)}
-                </button>
-              );
-            })}
-          </div>
-        </div>
+        {/* Botones de ajuste fino y décadas removidos según lo solicitado, se usa el slider */}
 
         {/* Slider interactivo táctil */}
         <div className="w-full flex flex-col gap-1.5 pt-1">

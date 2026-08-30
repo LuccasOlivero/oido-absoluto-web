@@ -219,7 +219,7 @@ export function GameView({
     setGameStatus('playing');
     setLastResult(null);
     setSelectedSnippet(1);
-    setSelectedYear(1960 + Math.floor(Math.random() * (currentYear - 1960 + 1)));
+    setSelectedYear(1990 + Math.floor(Math.random() * (currentYear - 1990 + 1)));
     setSongsGuessed(0);
     setExactHits(0);
     setCurrentSongIndex(0);
@@ -286,7 +286,7 @@ export function GameView({
         onPlay={handlePlaySnippet}
         onStop={handleStopSnippet}
         year={selectedYear}
-        minYear={1960}
+        minYear={1990}
         maxYear={currentYear}
         onYearChange={(y) => setSelectedYear(y)}
         onConfirm={handleConfirmYear}
