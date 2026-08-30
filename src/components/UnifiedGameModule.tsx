@@ -100,6 +100,7 @@ export function UnifiedGameModule({
                 type="button"
                 disabled={buttonDisabled}
                 onClick={() => {
+                  if (buttonDisabled) return;
                   sfx.playClick();
                   onStop();
                   onSelectSnippet(snip.duration);
@@ -109,7 +110,7 @@ export function UnifiedGameModule({
                     ? snip.activeStyle
                     : 'bg-stone-50/70 border-stone-200/70 text-stone-600 hover:bg-stone-100 hover:text-stone-900'
                 } ${
-                  isLocked ? 'opacity-40 grayscale cursor-not-allowed' : disabled ? 'opacity-50 cursor-not-allowed' : 'active:scale-98 cursor-pointer'
+                  isLocked ? 'opacity-40 grayscale cursor-not-allowed' : buttonDisabled ? 'opacity-50 cursor-not-allowed' : 'active:scale-98 cursor-pointer'
                 }`}
               >
                 <div className="flex items-center gap-1 mb-0.5">
