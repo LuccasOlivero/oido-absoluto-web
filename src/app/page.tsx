@@ -10,11 +10,15 @@ import { INITIAL_SONGS, getRandomSongs } from '@/lib/songs-data';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'game' | 'leaderboard'>('game');
-  const [songs, setSongs] = useState<Song[]>(() => getRandomSongs());
+  const [songs, setSongs] = useState<Song[]>(INITIAL_SONGS);
   const [lives, setLives] = useState(3);
   const [score, setScore] = useState(0);
   const [multiplier, setMultiplier] = useState(1.0);
   const [isHelpOpen, setIsHelpOpen] = useState(true);
+
+  useEffect(() => {
+    setSongs(getRandomSongs());
+  }, []);
 
   const handleUpdateGameState = (state: {
     lives: number;

@@ -38,7 +38,11 @@ export function GameView({
   // Game session states
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [selectedSnippet, setSelectedSnippet] = useState<SnippetDuration>(1);
-  const [selectedYear, setSelectedYear] = useState<number>(() => 1990 + Math.floor(Math.random() * (new Date().getFullYear() - 1990 + 1)));
+  const [selectedYear, setSelectedYear] = useState<number>(1990);
+  
+  useEffect(() => {
+    setSelectedYear(1990 + Math.floor(Math.random() * (new Date().getFullYear() - 1990 + 1)));
+  }, []);
   const [isPlayingSnippet, setIsPlayingSnippet] = useState(false);
   const [snippetProgress, setSnippetProgress] = useState(0);
   const [gameStatus, setGameStatus] = useState<GameStatus>('idle');
