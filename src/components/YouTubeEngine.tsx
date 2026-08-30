@@ -273,7 +273,17 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
           }
         },
         stop: () => {
-          finishSnippet();
+          isSnippetActiveRef.current = false;
+          clearTimers();
+          if (playerRef.current && isReadyRef.current) {
+            try {
+              playerRef.current.pauseVideo();
+            } catch {
+              // ignore
+            }
+          }
+          onPlayStateChangeRef.current(false);
+          onProgressChangeRef.current(0);
         },
         cueSong: (newVideoId: string, startSeconds = 0) => {
           startSecondsRef.current = startSeconds;
