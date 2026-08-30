@@ -59,13 +59,27 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full border-t border-stone-200/70 py-5 px-4 text-center text-xs text-stone-400 flex flex-col sm:flex-row items-center justify-between max-w-4xl mx-auto gap-2.5">
+      <footer className="w-full border-t border-stone-200/70 py-5 px-4 text-center text-xs text-stone-400 flex flex-col sm:flex-row items-center justify-between max-w-5xl mx-auto gap-4 sm:gap-2.5">
         <div className="flex items-center gap-2">
           <span>
             🎧 <strong>oído absoluto</strong>
           </span>
-          <span className="text-stone-300">•</span>
-          <span>1.0s / 3.0s / 5.0s</span>
+          <span className="text-stone-300 hidden sm:inline">•</span>
+          <span className="hidden sm:inline">1.0s / 3.0s / 5.0s</span>
+        </div>
+
+        <div className="flex items-center justify-center">
+          <span>
+            Desarrollado por{' '}
+            <a
+              href="https://www.linkedin.com/in/lucas-chorolqui-319090264/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-purple-600 hover:text-purple-500 transition-colors underline decoration-purple-200 underline-offset-2"
+            >
+              Lucas
+            </a>
+          </span>
         </div>
 
         <div className="flex items-center gap-3 text-stone-500">
