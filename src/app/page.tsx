@@ -56,16 +56,17 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full border-t border-stone-200/70 py-5 px-4 text-center text-xs text-stone-400 flex flex-col sm:flex-row items-center justify-between max-w-5xl mx-auto gap-4 sm:gap-2.5">
-        <div className="flex items-center gap-2">
-          <span>
-            🎧 <strong className="hidden sm:inline">oído absoluto</strong>
-          </span>
-          <span className="text-stone-300 hidden sm:inline">•</span>
-          <span className="hidden sm:inline">1.0s / 3.0s / 5.0s</span>
-        </div>
+      <footer className="w-full border-t border-stone-200/70 py-6 px-4 text-center text-xs text-stone-400 flex flex-col items-center justify-center max-w-5xl mx-auto gap-2.5">
+        <button
+          type="button"
+          onClick={() => setActiveTab("leaderboard")}
+          className="font-semibold text-stone-500 hover:text-amber-700 transition-colors cursor-pointer"
+        >
+          Ranking Mundial
+        </button>
 
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center gap-1.5">
+          <span className="text-sm">🎧</span>
           <span>
             Desarrollado por{' '}
             <a
@@ -77,16 +78,6 @@ export default function Home() {
               Lucas
             </a>
           </span>
-        </div>
-
-        <div className="flex items-center gap-3 text-stone-500">
-          <button
-            type="button"
-            onClick={() => setActiveTab("leaderboard")}
-            className="hover:text-amber-700 transition-colors cursor-pointer"
-          >
-            Ranking Mundial
-          </button>
         </div>
       </footer>
     </div>
