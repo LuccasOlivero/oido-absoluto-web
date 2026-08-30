@@ -108,12 +108,16 @@ export function GameView({
   };
 
   const handlePlayFullSong = () => {
-    if (!currentSong || !audioPlayerRef.current) return;
+    if (!currentSong) return;
     if (isPlayingFull) {
       handleStopSnippet();
       setIsPlayingFull(false);
     } else {
-      audioPlayerRef.current.playFullSong(0);
+      if (currentSong.youtube_id && youtubeRef.current) {
+        youtubeRef.current.playFull(currentSong.preview_start || 0);
+      } else if (audioPlayerRef.current) {
+        audioPlayerRef.current.playFullSong(0);
+      }
       setIsPlayingFull(true);
     }
   };
@@ -122,10 +126,14 @@ export function GameView({
   const handleConfirmYear = () => {
     if (!currentSong) return;
     handleStopSnippet();
-    if (currentSong.youtube_id && youtubeRef.current) {
-      youtubeRef.current.playFull(currentSong.preview_start || 0);
-      setIsPlayingFull(true);
-    }
+    
+    // Slight delay to prevent pauseVideo / playVideo race condition in YouTube IFrame API
+    setTimeout(() => {
+      if (currentSong?.youtube_id && youtubeRef.current) {
+        youtubeRef.current.playFull(currentSong.preview_start || 0);
+        setIsPlayingFull(true);
+      }
+    }, 150);
 
     const actualYear = currentSong.year;
     const yearDiff = Math.abs(selectedYear - actualYear);
