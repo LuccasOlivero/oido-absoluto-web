@@ -24,7 +24,7 @@ export function Header({
   onOpenHelp
 }: HeaderProps) {
   return (
-    <header className="w-full bg-[#F8F7F4]/95 backdrop-blur-md sticky top-0 z-40 border-b border-stone-200/70">
+    <header className="w-full bg-white/60 backdrop-blur-md sticky top-0 z-40 border-b border-stone-200/70">
       <div className="max-w-4xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3.5 flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-3">
         {/* Top Row on Mobile: Brand Logo + Controls */}
         <div className="flex items-center justify-between w-full sm:w-auto">
