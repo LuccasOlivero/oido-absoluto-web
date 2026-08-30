@@ -1008,6 +1008,31 @@ export const INITIAL_SONGS: Song[] = [
     youtube_id: '5EouEAo9wy0',
     preview_start: 30
   },
+
+  {
+    id: 'el-noba-tamo-chelo-rktango-1',
+    title: "Tamo' Chelo (RKTango)",
+    artist: 'El Noba',
+    year: 2026,
+    youtube_id: 'YdiKjg88WYk',
+    preview_start: 30
+  },
+  {
+    id: 'el-noba-tamo-chelo-rktango-2',
+    title: "Tamo' Chelo (RKTango)",
+    artist: 'El Noba',
+    year: 2026,
+    youtube_id: 'YdiKjg88WYk',
+    preview_start: 30
+  },
+  {
+    id: 'el-noba-tamo-chelo-rktango-3',
+    title: "Tamo' Chelo (RKTango)",
+    artist: 'El Noba',
+    year: 2026,
+    youtube_id: 'YdiKjg88WYk',
+    preview_start: 30
+  },
 ];
 
 export function getRandomSongs(count?: number): Song[] {
