@@ -1,7 +1,7 @@
 import { Song, LeaderboardEntry } from '@/types';
 import { INITIAL_SONGS } from './songs-data';
 
-const LOCAL_STORAGE_LEADERBOARD_KEY = 'oido_absoluto_leaderboard';
+const LOCAL_STORAGE_LEADERBOARD_KEY = 'oido_absoluto_leaderboard_v2';
 
 const DEFAULT_MOCK_LEADERBOARD: LeaderboardEntry[] = [
   {
@@ -75,6 +75,51 @@ const DEFAULT_MOCK_LEADERBOARD: LeaderboardEntry[] = [
     songs_guessed: 5,
     exact_hits: 2,
     created_at: new Date(Date.now() - 1000 * 60 * 4320).toISOString()
+  },
+  {
+    id: 'mock-9',
+    player_name: 'PopFan2000',
+    country_code: 'PE',
+    score: 3800,
+    songs_guessed: 4,
+    exact_hits: 2,
+    created_at: new Date(Date.now() - 1000 * 60 * 5000).toISOString()
+  },
+  {
+    id: 'mock-10',
+    player_name: 'JazzMaster',
+    country_code: 'BR',
+    score: 3100,
+    songs_guessed: 4,
+    exact_hits: 1,
+    created_at: new Date(Date.now() - 1000 * 60 * 6000).toISOString()
+  },
+  {
+    id: 'mock-11',
+    player_name: 'ReggaetonKing',
+    country_code: 'PR',
+    score: 2500,
+    songs_guessed: 3,
+    exact_hits: 1,
+    created_at: new Date(Date.now() - 1000 * 60 * 7000).toISOString()
+  },
+  {
+    id: 'mock-12',
+    player_name: 'IndieKid',
+    country_code: 'IT',
+    score: 1800,
+    songs_guessed: 2,
+    exact_hits: 0,
+    created_at: new Date(Date.now() - 1000 * 60 * 8000).toISOString()
+  },
+  {
+    id: 'mock-13',
+    player_name: 'NoobPlayer',
+    country_code: 'EC',
+    score: 950,
+    songs_guessed: 1,
+    exact_hits: 0,
+    created_at: new Date(Date.now() - 1000 * 60 * 9000).toISOString()
   }
 ];
 

@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo, useTransition, useCallback } from 
 import { LeaderboardEntry } from '@/types';
 import { fetchLeaderboard } from '@/lib/supabase';
 import { getCountryByCode } from '@/lib/countries';
-import { Search, RefreshCw, Play, Sparkles, Globe2, Flame } from 'lucide-react';
+import { Search, RefreshCw, Play, Sparkles, Globe2, Flame, Trophy, ChevronDown } from 'lucide-react';
 import { sfx } from '@/lib/audio-engine';
 
 const FlagImage = ({ code, className = "w-6 h-4" }: { code: string; className?: string }) => (
@@ -23,6 +23,7 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [visibleCount, setVisibleCount] = useState(10);
   const [, startTransition] = useTransition();
 
   const loadScores = useCallback(async () => {
@@ -83,6 +84,7 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
   }, [entries, search]);
 
   const top3 = entries.slice(0, 3);
+  const visibleEntries = filteredEntries.slice(0, visibleCount);
 
   return (
     <div className="w-full flex flex-col items-center gap-5 sm:gap-6 max-w-4xl mx-auto animate-in fade-in duration-200">
@@ -251,7 +253,7 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
                   </td>
                 </tr>
               ) : (
-                filteredEntries.map((entry, index) => {
+                visibleEntries.map((entry, index) => {
                   const country = getCountryByCode(entry.country_code);
                   const isTop1 = index === 0;
 
@@ -309,6 +311,22 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
             </tbody>
           </table>
         </div>
+
+        {/* Load More Button */}
+        {!loading && visibleCount < filteredEntries.length && (
+          <div className="w-full flex justify-center mt-1">
+            <button
+              type="button"
+              onClick={() => {
+                sfx.playClick();
+                setVisibleCount(prev => prev + 10);
+              }}
+              className="flex items-center gap-1.5 px-4 py-2 bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-600 rounded-xl text-xs font-bold transition-all active:scale-95 cursor-pointer shadow-xs"
+            >
+              Cargar más <ChevronDown className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
