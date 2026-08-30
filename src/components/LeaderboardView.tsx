@@ -19,28 +19,10 @@ interface LeaderboardViewProps {
   onPlayClick: () => void;
 }
 
-function formatRelativeTime(dateStr: string, referenceTime: number): string {
-  if (!referenceTime) return '';
-  try {
-    const diffMs = referenceTime - new Date(dateStr).getTime();
-    if (isNaN(diffMs)) return '';
-    const mins = Math.floor(diffMs / (1000 * 60));
-    if (mins < 1) return 'Ahora';
-    if (mins < 60) return `${mins}m`;
-    const hours = Math.floor(mins / 60);
-    if (hours < 24) return `${hours}h`;
-    const days = Math.floor(hours / 24);
-    return `${days}d`;
-  } catch {
-    return '';
-  }
-}
-
 export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
-  const [currentTime, setCurrentTime] = useState(0);
   const [, startTransition] = useTransition();
 
   const loadScores = useCallback(async () => {
@@ -48,7 +30,6 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
       const data = await fetchLeaderboard(100);
       startTransition(() => {
         setEntries(data);
-        setCurrentTime(Date.now());
         setLoading(false);
       });
     } catch (err) {
@@ -68,7 +49,7 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
         if (mounted) {
           startTransition(() => {
             setEntries(data);
-            setCurrentTime(Date.now());
+            
             setLoading(false);
           });
         }
@@ -248,20 +229,19 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
                 <th className="py-2.5 px-2.5 text-right">Puntaje</th>
                 <th className="py-2.5 px-2.5 text-center hidden sm:table-cell">Temas</th>
                 <th className="py-2.5 px-2.5 text-center hidden md:table-cell">Exactos (1.0s)</th>
-                <th className="py-2.5 px-2.5 text-right hidden sm:table-cell">Fecha</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-stone-100 text-xs sm:text-sm">
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="py-8 text-center text-stone-400">
+                  <td colSpan={5} className="py-8 text-center text-stone-400">
                     <RefreshCw className="w-5 h-5 animate-spin mx-auto text-purple-600 mb-1.5" />
                     Cargando ranking...
                   </td>
                 </tr>
               ) : filteredEntries.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-8 text-center text-stone-400 text-xs">
+                  <td colSpan={5} className="py-8 text-center text-stone-400 text-xs">
                     No se encontraron resultados.
                   </td>
                 </tr>
@@ -316,11 +296,6 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
                           <Sparkles className="w-3 h-3 text-amber-600" />
                           {entry.exact_hits}
                         </span>
-                      </td>
-
-                      {/* Date */}
-                      <td className="py-2.5 px-2.5 text-right text-xs text-stone-400 font-mono hidden sm:table-cell">
-                        {formatRelativeTime(entry.created_at, currentTime)}
                       </td>
                     </tr>
                   );
