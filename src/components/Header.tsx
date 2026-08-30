@@ -11,7 +11,6 @@ interface HeaderProps {
   maxLives?: number;
   score: number;
   multiplier: number;
-  onOpenHelp: () => void;
 }
 
 export function Header({
@@ -20,8 +19,7 @@ export function Header({
   lives,
   maxLives = 3,
   score,
-  multiplier,
-  onOpenHelp
+  multiplier
 }: HeaderProps) {
   return (
     <header className="w-full max-w-5xl mx-auto px-4 py-4 sm:py-5 sticky top-0 z-50">
@@ -73,14 +71,6 @@ export function Header({
               )}
             </div>
 
-            {/* Help Button */}
-            <button
-              type="button"
-              onClick={onOpenHelp}
-              className="p-2 rounded-xl bg-white border border-stone-200 text-stone-600 active:bg-stone-100 cursor-pointer shadow-xs"
-            >
-              <HelpCircle className="w-4 h-4" />
-            </button>
           </div>
         </div>
 
@@ -150,15 +140,6 @@ export function Header({
             )}
           </div>
 
-          {/* Help Button */}
-          <button
-            type="button"
-            onClick={onOpenHelp}
-            className="p-2.5 rounded-2xl bg-white hover:bg-stone-50 border border-stone-200 text-stone-500 hover:text-stone-800 transition-all shadow-xs hover:shadow-md cursor-pointer active:scale-95"
-            title="Cómo Jugar"
-          >
-            <HelpCircle className="w-5 h-5" />
-          </button>
         </div>
       </div>
     </header>

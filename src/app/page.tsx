@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { GameView } from "@/components/GameView";
 import { LeaderboardView } from "@/components/LeaderboardView";
-import { HowToPlayModal } from "@/components/HowToPlayModal";
 import { Song } from "@/types";
 import { INITIAL_SONGS, getRandomSongs } from "@/lib/songs-data";
 
@@ -14,7 +13,6 @@ export default function Home() {
   const [lives, setLives] = useState(3);
   const [score, setScore] = useState(0);
   const [multiplier, setMultiplier] = useState(1.0);
-  const [isHelpOpen, setIsHelpOpen] = useState(true);
 
   useEffect(() => {
     setSongs(getRandomSongs());
@@ -31,19 +29,18 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen text-stone-800 flex flex-col font-sans antialiased">
+    <div className="min-h-screen bg-[#F8F7F4] flex flex-col font-sans">
       {/* App Header */}
       <Header
         activeTab={activeTab}
-        onSelectTab={(tab) => setActiveTab(tab)}
+        onSelectTab={setActiveTab}
         lives={lives}
         score={score}
         multiplier={multiplier}
-        onOpenHelp={() => setIsHelpOpen(true)}
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-4xl w-full mx-auto px-4 py-6 sm:py-8 flex flex-col items-center">
+      <main className="flex-1 max-w-4xl mx-auto w-full px-3 sm:px-4 py-6 sm:py-8 flex flex-col">
         {activeTab === "game" ? (
           <GameView
             songs={songs.length > 0 ? songs : INITIAL_SONGS}
@@ -85,14 +82,6 @@ export default function Home() {
         <div className="flex items-center gap-3 text-stone-500">
           <button
             type="button"
-            onClick={() => setIsHelpOpen(true)}
-            className="hover:text-purple-700 transition-colors cursor-pointer"
-          >
-            Reglas
-          </button>
-          <span>•</span>
-          <button
-            type="button"
             onClick={() => setActiveTab("leaderboard")}
             className="hover:text-amber-700 transition-colors cursor-pointer"
           >
@@ -100,8 +89,6 @@ export default function Home() {
           </button>
         </div>
       </footer>
-
-      <HowToPlayModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
     </div>
   );
 }
