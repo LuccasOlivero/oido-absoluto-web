@@ -1,432 +1,57 @@
 import { Song } from '@/types';
 
 export const INITIAL_SONGS: Song[] = [
-  // Test YouTube Track
-  {
-    id: 'song-test-youtube',
-    title: 'Tema de Prueba YouTube',
-    artist: 'YouTube Video',
-    year: 2015,
-    genre: 'Pop / Test',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-    youtube_id: 'YdiKjg88WYk',
-    cover_url: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&auto=format&fit=crop&q=80',
-    preview_start: 30
-  },
-  // 1960s
-  {
-    id: 'song-60-1',
-    title: 'Twist and Shout',
-    artist: 'The Beatles',
-    year: 1963,
-    genre: 'Rock & Roll',
-    audio_url: 'https://audio.jukehost.co.uk/5K6Ea70eH4lZ8c12wV0n3W8DqO8X1l2m', // or direct preview
-    youtube_id: 'b-VAx4VpBi8',
-    cover_url: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-60-2',
-    title: '(I Can\'t Get No) Satisfaction',
-    artist: 'The Rolling Stones',
-    year: 1965,
-    genre: 'Classic Rock',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-    youtube_id: 'nrIPxlFzDi0',
-    cover_url: 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=400&auto=format&fit=crop&q=80',
-    preview_start: 5
-  },
-  {
-    id: 'song-60-3',
-    title: 'Good Vibrations',
-    artist: 'The Beach Boys',
-    year: 1966,
-    genre: 'Psychedelic Pop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-    youtube_id: 'Eab_beh07HU',
-    cover_url: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-60-4',
-    title: 'Hey Jude',
-    artist: 'The Beatles',
-    year: 1968,
-    genre: 'Pop Rock',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
-    youtube_id: 'A_MjCqQoLLA',
-    cover_url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&auto=format&fit=crop&q=80',
-    preview_start: 10
-  },
+  // --- 2020 ---
+  { id: 'song-2020-0', title: 'Blinding Lights', artist: 'The Weeknd', year: 2020, youtube_id: '4NRXx6U8ABQ', preview_start: 25 },
+  { id: 'song-2020-1', title: 'Dynamite', artist: 'BTS', year: 2020, youtube_id: 'gdZLi9oWNZg', preview_start: 20 },
+  { id: 'song-2020-2', title: 'Life Is Good', artist: 'Future ft. Drake', year: 2020, youtube_id: 'l0U7CbTEzfi', preview_start: 35 },
+  { id: 'song-2020-3', title: 'Toosie Slide', artist: 'Drake', year: 2020, youtube_id: 'xWggTb45brM', preview_start: 30 },
+  { id: 'song-2020-4', title: 'Watermelon Sugar', artist: 'Harry Styles', year: 2020, youtube_id: 'E07s5ZYygMg', preview_start: 30 },
+  { id: 'song-2020-5', title: "Don't Start Now", artist: 'Dua Lipa', year: 2020, youtube_id: 'oygrmJFKYZY', preview_start: 25 },
+  { id: 'song-2020-6', title: 'Say So', artist: 'Doja Cat', year: 2020, youtube_id: 'pok8H_KF1FA', preview_start: 35 },
+  { id: 'song-2020-7', title: 'WAP', artist: 'Cardi B', year: 2020, youtube_id: 'hsm4poTWjMs', preview_start: 20 },
+  { id: 'song-2020-8', title: 'ROCKSTAR', artist: 'DaBaby', year: 2020, youtube_id: 'mne_q0G5YpU', preview_start: 20 },
+  { id: 'song-2020-9', title: 'Yummy', artist: 'Justin Bieber', year: 2020, youtube_id: '8EJ3zbKTWQ8', preview_start: 25 },
 
-  // 1970s
-  {
-    id: 'song-70-1',
-    title: 'Stairway to Heaven',
-    artist: 'Led Zeppelin',
-    year: 1971,
-    genre: 'Hard Rock',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
-    youtube_id: 'QkF3oxziUI4',
-    cover_url: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-70-2',
-    title: 'Bohemian Rhapsody',
-    artist: 'Queen',
-    year: 1975,
-    genre: 'Rock Opera',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
-    youtube_id: 'fJ9rUzIMcZQ',
-    cover_url: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=400&auto=format&fit=crop&q=80',
-    preview_start: 15
-  },
-  {
-    id: 'song-70-3',
-    title: 'Dancing Queen',
-    artist: 'ABBA',
-    year: 1976,
-    genre: 'Disco Pop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
-    youtube_id: 'xFrGuyw1V8s',
-    cover_url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-70-4',
-    title: 'Stayin\' Alive',
-    artist: 'Bee Gees',
-    year: 1977,
-    genre: 'Disco',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
-    youtube_id: 'I_izvAbhExY',
-    cover_url: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-70-5',
-    title: 'Hotel California',
-    artist: 'Eagles',
-    year: 1976,
-    genre: 'Soft Rock',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
-    youtube_id: '09839DpTctU',
-    cover_url: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
+  // --- 2021 ---
+  { id: 'song-2021-0', title: 'STAY', artist: 'The Kid LAROI, Justin Bieber', year: 2021, youtube_id: 'kTJczUoc26U', preview_start: 15 },
+  { id: 'song-2021-1', title: 'drivers license', artist: 'Olivia Rodrigo', year: 2021, youtube_id: 'ZmDBbnmKpqQ', preview_start: 45 },
+  { id: 'song-2021-2', title: 'good 4 u', artist: 'Olivia Rodrigo', year: 2021, youtube_id: 'gNi_6U5Pm_o', preview_start: 25 },
+  { id: 'song-2021-3', title: 'Bad Habits', artist: 'Ed Sheeran', year: 2021, youtube_id: 'orJSJGHj6ZI', preview_start: 30 },
+  { id: 'song-2021-4', title: 'MONTERO', artist: 'Lil Nas X', year: 2021, youtube_id: '6swmTBVI83k', preview_start: 20 },
+  { id: 'song-2021-5', title: 'Save Your Tears', artist: 'The Weeknd', year: 2021, youtube_id: 'XXYlCGOWI90', preview_start: 35 },
+  { id: 'song-2021-6', title: 'Levitating', artist: 'Dua Lipa', year: 2021, youtube_id: 'TUVcZfQe-Kw', preview_start: 25 },
+  { id: 'song-2021-7', title: 'Leave the Door Open', artist: 'Silk Sonic', year: 2021, youtube_id: 'adLGHcj_fmA', preview_start: 35 },
+  { id: 'song-2021-8', title: 'Easy On Me', artist: 'Adele', year: 2021, youtube_id: 'U3ASj1L6_sY', preview_start: 45 },
+  { id: 'song-2021-9', title: 'Heat Waves', artist: 'Glass Animals', year: 2021, youtube_id: 'mRD0-GxqHVo', preview_start: 20 },
 
-  // 1980s
-  {
-    id: 'song-80-1',
-    title: 'Billie Jean',
-    artist: 'Michael Jackson',
-    year: 1982,
-    genre: 'Pop / Funk',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
-    youtube_id: 'Zi_XLORVofg',
-    cover_url: 'https://images.unsplash.com/photo-1520523839898-50712825e3a7?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-80-2',
-    title: 'Sweet Child O\' Mine',
-    artist: 'Guns N\' Roses',
-    year: 1987,
-    genre: 'Hard Rock',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
-    youtube_id: '1w7OgIMMRc4',
-    cover_url: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-80-3',
-    title: 'Take On Me',
-    artist: 'a-ha',
-    year: 1985,
-    genre: 'Synthpop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3',
-    youtube_id: 'djV11Xbc914',
-    cover_url: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-80-4',
-    title: 'Like a Virgin',
-    artist: 'Madonna',
-    year: 1984,
-    genre: 'Pop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3',
-    youtube_id: 's__rX_WL100',
-    cover_url: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-80-5',
-    title: 'Africa',
-    artist: 'Toto',
-    year: 1982,
-    genre: 'Soft Rock / Pop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3',
-    youtube_id: 'FTQbiNvZqaY',
-    cover_url: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  // 1990s
-  {
-    id: 'song-90-0',
-    title: 'De Música Ligera',
-    artist: 'Soda Stereo',
-    year: 1990,
-    genre: 'Rock Latino',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3',
-    youtube_id: 'T_FkEw27XJ0',
-    cover_url: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-90-1',
-    title: 'Smells Like Teen Spirit',
-    artist: 'Nirvana',
-    year: 1991,
-    genre: 'Grunge',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3',
-    youtube_id: 'hTWKbfoikeg',
-    cover_url: 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-90-2',
-    title: 'Wonderwall',
-    artist: 'Oasis',
-    year: 1995,
-    genre: 'Britpop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3',
-    youtube_id: '6hzrDeceEKc',
-    cover_url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-90-3',
-    title: '...Baby One More Time',
-    artist: 'Britney Spears',
-    year: 1998,
-    genre: 'Teen Pop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-    youtube_id: 'C-u5WLJ9Yk4',
-    cover_url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-90-4',
-    title: 'Wannabe',
-    artist: 'Spice Girls',
-    year: 1996,
-    genre: 'Pop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-    youtube_id: 'gJLIiF15wjQ',
-    cover_url: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-90-5',
-    title: 'Californication',
-    artist: 'Red Hot Chili Peppers',
-    year: 1999,
-    genre: 'Alternative Rock',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
-    youtube_id: 'YlUKcNNmywk',
-    cover_url: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
+  // --- 2022 ---
+  { id: 'song-2022-0', title: 'As It Was', artist: 'Harry Styles', year: 2022, youtube_id: 'H5v3kku4y6Q', preview_start: 15 },
+  { id: 'song-2022-1', title: 'Quevedo Bzrp Music Sessions 52', artist: 'Bizarrap', year: 2022, youtube_id: 'A_g3lMcWVy0', preview_start: 30 },
+  { id: 'song-2022-2', title: 'Tití Me Preguntó', artist: 'Bad Bunny', year: 2022, youtube_id: 'Cr8K88UcO0s', preview_start: 25 },
+  { id: 'song-2022-3', title: 'Me Porto Bonito', artist: 'Bad Bunny', year: 2022, youtube_id: 'saGYtwTWccs', preview_start: 25 },
+  { id: 'song-2022-4', title: 'Anti-Hero', artist: 'Taylor Swift', year: 2022, youtube_id: 'b1kbLwvqugk', preview_start: 35 },
+  { id: 'song-2022-5', title: "I Ain't Worried", artist: 'OneRepublic', year: 2022, youtube_id: 'mNEUkkoUoIA', preview_start: 20 },
+  { id: 'song-2022-6', title: "I'm Good (Blue)", artist: 'David Guetta', year: 2022, youtube_id: '90RLzVUuOe4', preview_start: 25 },
+  { id: 'song-2022-7', title: 'Enemy', artist: 'Imagine Dragons', year: 2022, youtube_id: 'D9G1VOjN_84', preview_start: 20 },
+  { id: 'song-2022-8', title: 'DESPECHÁ', artist: 'Rosalía', year: 2022, youtube_id: 'n0mJ2zZ5T_Y', preview_start: 15 },
+  { id: 'song-2022-9', title: 'Te Felicito', artist: 'Shakira', year: 2022, youtube_id: '4I25nV9hXGA', preview_start: 25 },
 
-  // 2000s
-  {
-    id: 'song-00-1',
-    title: 'In the End',
-    artist: 'Linkin Park',
-    year: 2000,
-    genre: 'Nu Metal / Rock',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
-    youtube_id: 'eVTXPUF4Oz4',
-    cover_url: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-00-2',
-    title: 'Lose Yourself',
-    artist: 'Eminem',
-    year: 2002,
-    genre: 'Hip Hop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
-    youtube_id: '_Yhyp-_hX2s',
-    cover_url: 'https://images.unsplash.com/photo-1520523839898-50712825e3a7?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-00-3',
-    title: 'Mr. Brightside',
-    artist: 'The Killers',
-    year: 2004,
-    genre: 'Indie Rock',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
-    youtube_id: 'gGdGFtwCN0k',
-    cover_url: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-00-4',
-    title: 'Hips Don\'t Lie',
-    artist: 'Shakira ft. Wyclef Jean',
-    year: 2006,
-    genre: 'Latin Pop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
-    youtube_id: 'DUT5rEU6pqM',
-    cover_url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-00-5',
-    title: 'Viva La Vida',
-    artist: 'Coldplay',
-    year: 2008,
-    genre: 'Pop Rock',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
-    youtube_id: 'dvgZkm1xWPE',
-    cover_url: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-
-  // 2010s
-  {
-    id: 'song-10-1',
-    title: 'Rolling in the Deep',
-    artist: 'Adele',
-    year: 2010,
-    genre: 'Soul / Pop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
-    youtube_id: 'rYEDA3JcQqw',
-    cover_url: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-10-2',
-    title: 'Get Lucky',
-    artist: 'Daft Punk ft. Pharrell Williams',
-    year: 2013,
-    genre: 'Disco / Funk',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
-    youtube_id: '5NV6Rdv1a3I',
-    cover_url: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-10-3',
-    title: 'Uptown Funk',
-    artist: 'Mark Ronson ft. Bruno Mars',
-    year: 2014,
-    genre: 'Funk Pop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3',
-    youtube_id: 'OPf0YbXqDm0',
-    cover_url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-10-4',
-    title: 'Shape of You',
-    artist: 'Ed Sheeran',
-    year: 2017,
-    genre: 'Pop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3',
-    youtube_id: 'JGwWNGJdvx8',
-    cover_url: 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-10-5',
-    title: 'Blinding Lights',
-    artist: 'The Weeknd',
-    year: 2019,
-    genre: 'Synthwave / Pop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3',
-    youtube_id: '4NRXx6U8ABQ',
-    cover_url: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-10-6',
-    title: 'Despacito',
-    artist: 'Luis Fonsi ft. Daddy Yankee',
-    year: 2017,
-    genre: 'Reggaeton / Pop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3',
-    youtube_id: 'kJQP7kiw5Fk',
-    cover_url: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-
-  // 2020s
-  {
-    id: 'song-20-1',
-    title: 'Levitating',
-    artist: 'Dua Lipa',
-    year: 2020,
-    genre: 'Nu-Disco / Pop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3',
-    youtube_id: 'TUVcZfQe-Kw',
-    cover_url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-20-2',
-    title: 'As It Was',
-    artist: 'Harry Styles',
-    year: 2022,
-    genre: 'Synthpop / Indie',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3',
-    youtube_id: 'H5v3kku4y6Q',
-    cover_url: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-20-3',
-    title: 'Flowers',
-    artist: 'Miley Cyrus',
-    year: 2023,
-    genre: 'Disco Pop',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-    youtube_id: 'G7KNmW9a75Y',
-    cover_url: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-20-4',
-    title: 'Bzrp Music Sessions, Vol. 53',
-    artist: 'Bizarrap & Shakira',
-    year: 2023,
-    genre: 'Electro Pop / Latin',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-    youtube_id: 'CocEMWdc7Ck',
-    cover_url: 'https://images.unsplash.com/photo-1520523839898-50712825e3a7?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  },
-  {
-    id: 'song-20-5',
-    title: 'Espresso',
-    artist: 'Sabrina Carpenter',
-    year: 2024,
-    genre: 'Pop / Disco',
-    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
-    youtube_id: 'eVli-tstM5E',
-    cover_url: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&auto=format&fit=crop&q=80',
-    preview_start: 0
-  }
+  // --- 2023 ---
+  { id: 'song-2023-0', title: 'Flowers', artist: 'Miley Cyrus', year: 2023, youtube_id: 'G7KNmW9a75Y', preview_start: 20 },
+  { id: 'song-2023-1', title: 'Shakira Bzrp Music Sessions 53', artist: 'Bizarrap', year: 2023, youtube_id: 'CocEMWdc7Ck', preview_start: 30 },
+  { id: 'song-2023-2', title: 'TQG', artist: 'Karol G, Shakira', year: 2023, youtube_id: 'jqyE-J-T7aU', preview_start: 25 },
+  { id: 'song-2023-3', title: 'Ella Baila Sola', artist: 'Peso Pluma', year: 2023, youtube_id: 'lZJaNoWcwqg', preview_start: 20 },
+  { id: 'song-2023-4', title: 'Kill Bill', artist: 'SZA', year: 2023, youtube_id: 'SQnc1QibapQ', preview_start: 25 },
+  { id: 'song-2023-5', title: 'La Bebe Remix', artist: 'Ynglvcas', year: 2023, youtube_id: 'nC_R_lS8YgU', preview_start: 20 },
+  { id: 'song-2023-6', title: 'Calm Down', artist: 'Rema', year: 2023, youtube_id: 'WcIcVapfqXw', preview_start: 20 },
+  { id: 'song-2023-7', title: 'un x100to', artist: 'Grupo Frontera', year: 2023, youtube_id: '1slRqFEA5Tw', preview_start: 25 },
+  { id: 'song-2023-8', title: 'Dance The Night', artist: 'Dua Lipa', year: 2023, youtube_id: 'OiC1rgCPmUQ', preview_start: 20 },
+  { id: 'song-2023-9', title: 'Seven', artist: 'Jung Kook', year: 2023, youtube_id: 'QU9c0053UAU', preview_start: 15 }
 ];
 
-// Helper para barajar canciones aleatoriamente
 export function getRandomSongs(count?: number): Song[] {
   const shuffled = [...INITIAL_SONGS];
-  // Fisher-Yates shuffle for uniform randomness
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
