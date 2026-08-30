@@ -41,15 +41,15 @@ export function Visualizer({ isPlaying, intensity = 1 }: VisualizerProps) {
         const x = i * (barWidth + 3) + 2;
         const y = (height - barHeight) / 2;
 
-        // Pastel gradients: Soft Lilac -> Soft Peach -> Soft Mint
+        // Retro Synthwave gradients: Cyan -> Magenta -> Yellow
         const gradient = ctx.createLinearGradient(0, y, 0, y + barHeight);
         if (isPlaying) {
-          gradient.addColorStop(0, '#C4B5FD'); // pastel purple
-          gradient.addColorStop(0.5, '#FDBA74'); // pastel peach
-          gradient.addColorStop(1, '#6EE7B7'); // pastel mint
+          gradient.addColorStop(0, '#06b6d4'); // cyan-500
+          gradient.addColorStop(0.5, '#d946ef'); // fuchsia-500
+          gradient.addColorStop(1, '#f59e0b'); // amber-500
         } else {
-          gradient.addColorStop(0, '#E7E5E4'); // stone-200
-          gradient.addColorStop(1, '#D6D3D1'); // stone-300
+          gradient.addColorStop(0, '#e7e5e4'); // stone-200
+          gradient.addColorStop(1, '#d6d3d1'); // stone-300
         }
 
         ctx.fillStyle = gradient;

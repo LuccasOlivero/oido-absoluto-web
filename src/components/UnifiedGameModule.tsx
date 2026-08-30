@@ -3,6 +3,7 @@
 import React from 'react';
 import { SnippetDuration } from '@/types';
 import { Play, Square, Sparkles, Zap, Search, Minus, Plus, CheckCircle2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Visualizer } from './Visualizer';
 import { sfx } from '@/lib/audio-engine';
 
@@ -211,10 +212,19 @@ export function UnifiedGameModule({
         </div>
 
         {/* Display del Año Seleccionado */}
-        <div className="py-2 px-8 bg-purple-50/90 border border-purple-200/80 rounded-2xl shadow-2xs">
-          <span className="text-4xl sm:text-5xl font-black tracking-tight text-purple-950 font-mono">
-            {year}
-          </span>
+        <div className="py-2 px-8 bg-purple-50/90 border border-purple-200/80 rounded-2xl shadow-2xs overflow-hidden h-[72px] sm:h-[84px] flex items-center justify-center">
+          <AnimatePresence mode="popLayout">
+            <motion.span 
+              key={year}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              className="text-4xl sm:text-5xl font-black tracking-tight text-purple-950 font-mono block"
+            >
+              {year}
+            </motion.span>
+          </AnimatePresence>
         </div>
 
         {/* Botones de ajuste fino (-5, -1, +1, +5) y décadas */}
@@ -292,7 +302,7 @@ export function UnifiedGameModule({
                 onYearChange(Math.max(minYear, Math.min(currentYear, val)));
               }
             }}
-            className="w-full cursor-pointer touch-pan-x"
+            className="w-full cursor-pointer touch-pan-x accent-purple-600 h-2 bg-purple-200/50 rounded-lg appearance-none"
           />
           <div className="flex justify-between text-[11px] text-stone-400 font-mono px-0.5">
             <span>{minYear}</span>

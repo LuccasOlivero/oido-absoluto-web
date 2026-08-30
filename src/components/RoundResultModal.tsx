@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { RoundResult } from '@/types';
 import { Trophy, ArrowRight, Volume2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
 
 interface RoundResultModalProps {
@@ -88,8 +89,14 @@ export function RoundResultModal({
   const header = getResultHeader();
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-stone-900/40 backdrop-blur-sm animate-in fade-in duration-150 overflow-y-auto">
-      <div className="w-full max-w-md bg-white border border-stone-200 rounded-3xl p-5 sm:p-7 shadow-xl flex flex-col items-center gap-4 sm:gap-5 relative my-auto max-h-[92vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-stone-900/40 backdrop-blur-sm overflow-y-auto">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        transition={{ type: "spring", stiffness: 350, damping: 25 }}
+        className="w-full max-w-md bg-white border border-stone-200 rounded-3xl p-5 sm:p-7 shadow-xl flex flex-col items-center gap-4 sm:gap-5 relative my-auto max-h-[92vh] overflow-y-auto"
+      >
         {/* Result Header Badge */}
         <div className={`w-full p-4 rounded-2xl border ${header.bg} flex flex-col items-center text-center`}>
           <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 bg-white/80 rounded-full mb-1.5 text-stone-700 border border-stone-200/60">
@@ -197,7 +204,7 @@ export function RoundResultModal({
           <span>Siguiente Canción</span>
           <ArrowRight className="w-4 h-4" />
         </button>
-      </div>
+      </motion.div>
     </div>
   );
 }

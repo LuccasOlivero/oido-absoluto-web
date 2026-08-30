@@ -32,7 +32,7 @@ export function Header({
             onClick={() => onSelectTab('game')}
             className="flex items-center gap-2 cursor-pointer group"
           >
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center border border-purple-200/60 shadow-2xs group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-white flex items-center justify-center border border-fuchsia-300 shadow-[0_0_12px_rgba(217,70,239,0.4)] group-hover:scale-105 transition-transform">
               <Headphones className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
             </div>
             <div>

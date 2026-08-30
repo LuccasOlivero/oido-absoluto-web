@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { CountryPicker } from './CountryPicker';
 import { Country } from '@/types';
 import { Trophy, RefreshCw, Globe, Sparkles, CheckCircle2 } from 'lucide-react';
@@ -50,8 +51,14 @@ export function GameOverModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-stone-900/40 backdrop-blur-sm animate-in fade-in duration-150 overflow-y-auto">
-      <div className="w-full max-w-md bg-white border border-stone-200 rounded-3xl p-5 sm:p-7 shadow-2xl flex flex-col items-center gap-4 sm:gap-5 relative my-auto max-h-[92vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-stone-900/40 backdrop-blur-sm overflow-y-auto">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        transition={{ type: "spring", stiffness: 350, damping: 25 }}
+        className="w-full max-w-md bg-white border border-stone-200 rounded-3xl p-5 sm:p-7 shadow-2xl flex flex-col items-center gap-4 sm:gap-5 relative my-auto max-h-[92vh] overflow-y-auto"
+      >
         {/* Title */}
         <div className="flex flex-col items-center text-center">
           <div className="text-4xl mb-1.5">💔</div>
@@ -151,7 +158,7 @@ export function GameOverModal({
             <span>Ver Ranking</span>
           </button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
