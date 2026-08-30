@@ -96,11 +96,8 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
             </span>
           </div>
           <h1 className="text-lg sm:text-2xl font-black text-stone-900 leading-tight">
-            Mejores Oídos del Mundo 🌍
+            Mejores Oídos del Mundo
           </h1>
-          <p className="text-xs text-stone-500 mt-0.5">
-            Jugadores con mayor precisión adivinando años musicales
-          </p>
         </div>
 
         <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-between sm:justify-end">
