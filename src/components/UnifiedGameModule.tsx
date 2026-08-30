@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { SnippetDuration } from '@/types';
-import { Play, Square, Sparkles, Zap, Search, CheckCircle2 } from 'lucide-react';
+import { Play, Square, Sparkles, Zap, Search, CheckCircle2, Lock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Visualizer } from './Visualizer';
 import { sfx } from '@/lib/audio-engine';
@@ -90,23 +90,27 @@ export function UnifiedGameModule({
         <div className="w-full grid grid-cols-3 gap-2 sm:gap-3.5">
           {snippets.map((snip) => {
             const isSelected = selectedSnippet === snip.duration;
-            const Icon = snip.icon;
+            const isLocked = snip.duration < selectedSnippet;
+            const Icon = isLocked ? Lock : snip.icon;
+            const buttonDisabled = disabled || isPlaying || isLocked;
 
             return (
               <button
                 key={snip.duration}
                 type="button"
-                disabled={disabled || isPlaying}
+                disabled={buttonDisabled}
                 onClick={() => {
                   sfx.playClick();
                   onStop();
                   onSelectSnippet(snip.duration);
                 }}
-                className={`relative flex flex-col items-center justify-center py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-2xl border transition-all duration-150 cursor-pointer ${
+                className={`relative flex flex-col items-center justify-center py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-2xl border transition-all duration-150 ${
                   isSelected
                     ? snip.activeStyle
-                    : 'bg-stone-50/70 border-stone-200/70 text-stone-600 hover:bg-stone-100 hover:text-stone-900 active:bg-stone-100'
-                } ${disabled ? 'opacity-50 cursor-not-allowed' : 'active:scale-98'}`}
+                    : 'bg-stone-50/70 border-stone-200/70 text-stone-600 hover:bg-stone-100 hover:text-stone-900'
+                } ${
+                  isLocked ? 'opacity-40 grayscale cursor-not-allowed' : disabled ? 'opacity-50 cursor-not-allowed' : 'active:scale-98 cursor-pointer'
+                }`}
               >
                 <div className="flex items-center gap-1 mb-0.5">
                   <Icon className="w-3.5 h-3.5" />
@@ -115,7 +119,7 @@ export function UnifiedGameModule({
                   </span>
                 </div>
                 <div className="text-[10px] sm:text-[11px] font-semibold opacity-85">
-                  +{snip.points} pts
+                  {isLocked ? 'Bloqueado' : `+${snip.points} pts`}
                 </div>
               </button>
             );
