@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo, useTransition, useCallback } from 
 import { LeaderboardEntry } from '@/types';
 import { fetchLeaderboard } from '@/lib/supabase';
 import { getCountryByCode } from '@/lib/countries';
-import { Search, RefreshCw, Play, Sparkles, Globe2, Flame, Trophy, ChevronDown } from 'lucide-react';
+import { Search, RefreshCw, Play, Sparkles, Globe2, Flame, Trophy, ChevronLeft, ChevronRight } from 'lucide-react';
 import { sfx } from '@/lib/audio-engine';
 
 const FlagImage = ({ code, className = "w-6 h-4" }: { code: string; className?: string }) => (
@@ -23,7 +23,8 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
-  const [visibleCount, setVisibleCount] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
   const [, startTransition] = useTransition();
 
   const loadScores = useCallback(async () => {
@@ -84,7 +85,8 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
   }, [entries, search]);
 
   const top3 = entries.slice(0, 3);
-  const visibleEntries = filteredEntries.slice(0, visibleCount);
+  const visibleEntries = filteredEntries.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const totalPages = Math.ceil(filteredEntries.length / itemsPerPage);
 
   return (
     <div className="w-full flex flex-col items-center gap-5 sm:gap-6 max-w-4xl mx-auto animate-in fade-in duration-200">
@@ -217,7 +219,10 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
               type="text"
               placeholder="Buscar por jugador o país..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setCurrentPage(1);
+              }}
               className="w-full pl-9 pr-3 py-2 bg-stone-50 text-stone-800 text-xs sm:text-sm rounded-xl border border-stone-200 focus:outline-none focus:border-purple-400 placeholder-stone-400"
             />
           </div>
@@ -312,18 +317,35 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
           </table>
         </div>
 
-        {/* Load More Button */}
-        {!loading && visibleCount < filteredEntries.length && (
-          <div className="w-full flex justify-center mt-1">
+        {/* Pagination Controls */}
+        {!loading && totalPages > 1 && (
+          <div className="w-full flex items-center justify-between mt-2 pt-2 border-t border-stone-100">
             <button
               type="button"
+              disabled={currentPage === 1}
               onClick={() => {
                 sfx.playClick();
-                setVisibleCount(prev => prev + 10);
+                setCurrentPage(p => Math.max(1, p - 1));
               }}
-              className="flex items-center gap-1.5 px-4 py-2 bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-600 rounded-xl text-xs font-bold transition-all active:scale-95 cursor-pointer shadow-xs"
+              className="flex items-center gap-1.5 px-3 py-2 bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-600 rounded-xl text-xs font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 cursor-pointer shadow-xs"
             >
-              Cargar más <ChevronDown className="w-3.5 h-3.5" />
+              <ChevronLeft className="w-3.5 h-3.5" /> Anterior
+            </button>
+            
+            <span className="text-xs font-medium text-stone-400">
+              Página {currentPage} de {totalPages}
+            </span>
+
+            <button
+              type="button"
+              disabled={currentPage === totalPages}
+              onClick={() => {
+                sfx.playClick();
+                setCurrentPage(p => Math.min(totalPages, p + 1));
+              }}
+              className="flex items-center gap-1.5 px-3 py-2 bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-600 rounded-xl text-xs font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 cursor-pointer shadow-xs"
+            >
+              Siguiente <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
         )}
