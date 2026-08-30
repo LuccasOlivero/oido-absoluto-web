@@ -870,23 +870,151 @@ export const INITIAL_SONGS: Song[] = [
 { id: 'song-16', title: 'Not Like Us', artist: 'Kendrick Lamar', year: 2026, youtube_id: 'T6eK-2OQtew', preview_start: 30 },
 
 
-{ id: 'song-19', title: 'BIRDS OF A FEATHER', artist: 'Billie Eilish', year: 2026, youtube_id: 'd5gf9dXbPi0', preview_start: 40 },
-
-];
-
-export function getRandomSongs(count?: number): Song[] {
-  const shuffled = [...INITIAL_SONGS];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]  {
-    id: 'momo-me-llama',
+{ id: 'song-19', title: 'BIRDS OF A FEATHER', artist: 'Billie Eilish', year: 2026, youtube_id: 'd5gf9dXbPi0', preview_start: 40 }
+,
+  {
+    id: 'momo-me-llama-2010',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2010,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+  {
+    id: 'momo-me-llama-2011',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2011,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+  {
+    id: 'momo-me-llama-2012',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2012,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+  {
+    id: 'momo-me-llama-2013',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2013,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+  {
+    id: 'momo-me-llama-2014',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2014,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+  {
+    id: 'momo-me-llama-2015',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2015,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+  {
+    id: 'momo-me-llama-2016',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2016,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+  {
+    id: 'momo-me-llama-2017',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2017,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+  {
+    id: 'momo-me-llama-2018',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2018,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+  {
+    id: 'momo-me-llama-2019',
     title: 'ME LLAMA',
     artist: 'MOMO (Beret Cover)',
     year: 2019,
     youtube_id: '5EouEAo9wy0',
     preview_start: 30
   },
+  {
+    id: 'momo-me-llama-2020',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2020,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+  {
+    id: 'momo-me-llama-2021',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2021,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+  {
+    id: 'momo-me-llama-2022',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2022,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+  {
+    id: 'momo-me-llama-2023',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2023,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+  {
+    id: 'momo-me-llama-2024',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2024,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+  {
+    id: 'momo-me-llama-2025',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2025,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+  {
+    id: 'momo-me-llama-2026',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2026,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
 ];
+
+export function getRandomSongs(count?: number): Song[] {
+  const shuffled = [...INITIAL_SONGS];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
   return count ? shuffled.slice(0, count) : shuffled;
 }
