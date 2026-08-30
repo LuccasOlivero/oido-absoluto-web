@@ -35,7 +35,7 @@ export function Header({
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-cyan-400 via-purple-500 to-fuchsia-500 text-white flex items-center justify-center border-2 border-white/50 shadow-[0_0_15px_rgba(217,70,239,0.5)] group-hover:scale-105 group-hover:rotate-3 transition-all">
               <Headphones className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
             </div>
-            <div className="flex flex-col">
+            <div className="hidden sm:flex flex-col">
               <span className="text-[15px] sm:text-base font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-800 to-fuchsia-600 font-mono leading-none">
                 OÍDO ABSOLUTO
               </span>

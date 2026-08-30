@@ -59,7 +59,7 @@ export default function Home() {
       <footer className="w-full border-t border-stone-200/70 py-5 px-4 text-center text-xs text-stone-400 flex flex-col sm:flex-row items-center justify-between max-w-5xl mx-auto gap-4 sm:gap-2.5">
         <div className="flex items-center gap-2">
           <span>
-            🎧 <strong>oído absoluto</strong>
+            🎧 <strong className="hidden sm:inline">oído absoluto</strong>
           </span>
           <span className="text-stone-300 hidden sm:inline">•</span>
           <span className="hidden sm:inline">1.0s / 3.0s / 5.0s</span>
