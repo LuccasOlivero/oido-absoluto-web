@@ -86,6 +86,8 @@ export default function Home() {
           </button>
         </div>
       </footer>
+
+      <HowToPlayModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
     </div>
   );
 }
