@@ -165,6 +165,13 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
               onReady: () => {
                 if (isMounted) {
                   isReadyRef.current = true;
+                  // @ts-ignore
+                  const pending = playerRef.current?.__pendingCue;
+                  if (pending && playerRef.current?.cueVideoById) {
+                    try {
+                      playerRef.current.cueVideoById(pending);
+                    } catch {}
+                  }
                 }
               },
               onStateChange: (event: { data: number }) => {
@@ -215,8 +222,8 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
           isReadyRef.current = false;
         }
       };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [videoId]);
+    // Initialize exactly once
+    }, []);
 
     useImperativeHandle(
       ref,
@@ -235,6 +242,10 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
               playerRef.current.setVolume(100);
               isSnippetActiveRef.current = true;
               playerRef.current.playVideo();
+              
+              if (playerRef.current.getPlayerState && playerRef.current.getPlayerState() === 1 && progressIntervalRef.current === null) {
+                startProgressTracking();
+              }
             } catch {
               isSnippetActiveRef.current = false;
               onErrorFallbackRef.current?.();
@@ -257,6 +268,12 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
             } catch {
               // ignore
             }
+          } else {
+            // Player not ready yet, store it so onReady can cue it
+            // @ts-ignore
+            playerRef.current = playerRef.current || {};
+            // @ts-ignore
+            playerRef.current.__pendingCue = { videoId: newVideoId, startSeconds };
           }
         }
       }),
