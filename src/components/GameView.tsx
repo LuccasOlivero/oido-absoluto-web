@@ -122,6 +122,10 @@ export function GameView({
   const handleConfirmYear = () => {
     if (!currentSong) return;
     handleStopSnippet();
+    if (currentSong.youtube_id && youtubeRef.current) {
+      youtubeRef.current.playFull(currentSong.preview_start || 0);
+      setIsPlayingFull(true);
+    }
 
     const actualYear = currentSong.year;
     const yearDiff = Math.abs(selectedYear - actualYear);

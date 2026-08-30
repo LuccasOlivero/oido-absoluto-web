@@ -5,6 +5,7 @@ import { SnippetDuration } from '@/types';
 
 export interface YouTubeEngineRef {
   playSnippet: (duration: SnippetDuration, startSeconds?: number) => void;
+  playFull: (startSeconds?: number) => void;
   stop: () => void;
   cueSong: (videoId: string, startSeconds?: number) => void;
 }
@@ -252,6 +253,23 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
             }
           } else {
             onErrorFallbackRef.current?.();
+          }
+        },
+        playFull: (startSeconds = 0) => {
+          isSnippetActiveRef.current = false;
+          clearTimers();
+          targetDurationRef.current = 999;
+          startSecondsRef.current = startSeconds;
+
+          if (playerRef.current && isReadyRef.current) {
+            try {
+              playerRef.current.seekTo(startSeconds, true);
+              playerRef.current.setVolume(100);
+              playerRef.current.playVideo();
+              onPlayStateChangeRef.current(true);
+            } catch {
+              onErrorFallbackRef.current?.();
+            }
           }
         },
         stop: () => {
