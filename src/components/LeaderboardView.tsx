@@ -7,6 +7,14 @@ import { getCountryByCode } from '@/lib/countries';
 import { Search, RefreshCw, Play, Sparkles, Globe2, Flame } from 'lucide-react';
 import { sfx } from '@/lib/audio-engine';
 
+const FlagImage = ({ code, className = "w-6 h-4" }: { code: string; className?: string }) => (
+  <img 
+    src={`https://flagcdn.com/w40/${code.toLowerCase()}.png`} 
+    alt={code} 
+    className={`rounded-[2px] object-cover shadow-[0_1px_2px_rgba(0,0,0,0.1)] border border-stone-200/50 ${className}`} 
+  />
+);
+
 interface LeaderboardViewProps {
   onPlayClick: () => void;
 }
@@ -148,8 +156,8 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
         <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 items-end pt-1">
           {/* 2nd Place */}
           <div className="order-2 sm:order-1 bg-stone-50 border border-stone-200/80 rounded-2xl p-3.5 sm:p-4 flex sm:flex-col items-center justify-between sm:justify-center text-left sm:text-center shadow-xs">
-            <div className="flex items-center sm:flex-col gap-3 sm:gap-1">
-              <span className="text-3xl">{getCountryByCode(top3[1].country_code).flag}</span>
+            <div className="flex items-center sm:flex-col gap-3 sm:gap-2">
+              <FlagImage code={top3[1].country_code} className="w-8 h-6 sm:w-10 sm:h-7" />
               <div>
                 <div className="text-[10px] font-bold px-2 py-0.5 bg-stone-200 text-stone-700 rounded-full inline-block sm:mb-1">
                   🥈 2º Puesto
@@ -169,8 +177,8 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
 
           {/* 1st Place */}
           <div className="order-1 sm:order-2 bg-amber-50/90 border-2 border-amber-200/90 rounded-2xl p-4 sm:p-5 flex sm:flex-col items-center justify-between sm:justify-center text-left sm:text-center shadow-sm">
-            <div className="flex items-center sm:flex-col gap-3 sm:gap-1">
-              <span className="text-4xl">{getCountryByCode(top3[0].country_code).flag}</span>
+            <div className="flex items-center sm:flex-col gap-3 sm:gap-2">
+              <FlagImage code={top3[0].country_code} className="w-10 h-7 sm:w-12 sm:h-9 shadow-[0_2px_5px_rgba(0,0,0,0.15)]" />
               <div>
                 <div className="text-[10px] font-bold px-2.5 py-0.5 bg-amber-200 text-amber-900 rounded-full inline-flex items-center gap-1 sm:mb-1">
                   <span>🥇 1º Campeón</span>
@@ -191,8 +199,8 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
 
           {/* 3rd Place */}
           <div className="order-3 sm:order-3 bg-orange-50/60 border border-orange-200/70 rounded-2xl p-3.5 sm:p-4 flex sm:flex-col items-center justify-between sm:justify-center text-left sm:text-center shadow-xs">
-            <div className="flex items-center sm:flex-col gap-3 sm:gap-1">
-              <span className="text-3xl">{getCountryByCode(top3[2].country_code).flag}</span>
+            <div className="flex items-center sm:flex-col gap-3 sm:gap-2">
+              <FlagImage code={top3[2].country_code} className="w-8 h-6 sm:w-10 sm:h-7" />
               <div>
                 <div className="text-[10px] font-bold px-2 py-0.5 bg-orange-200 text-orange-900 rounded-full inline-block sm:mb-1">
                   🥉 3º Puesto
@@ -276,16 +284,14 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
 
                       {/* Player & Country Flag */}
                       <td className="py-2.5 px-2.5">
-                        <div className="flex items-center gap-2">
-                          <span className="text-lg leading-none" title={country.name}>
-                            {country.flag}
-                          </span>
+                        <div className="flex items-center gap-2.5">
+                          <FlagImage code={country.code} className="w-6 h-4 shrink-0" />
                           <div className="flex flex-col min-w-0">
                             <span className="font-semibold text-stone-800 truncate text-xs sm:text-sm">
                               {entry.player_name}
                             </span>
                             <span className="text-[10px] text-stone-400 truncate">
-                              {country.name} ({country.code})
+                              {country.name}
                             </span>
                           </div>
                         </div>
