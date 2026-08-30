@@ -878,7 +878,15 @@ export function getRandomSongs(count?: number): Song[] {
   const shuffled = [...INITIAL_SONGS];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]  {
+    id: 'momo-me-llama',
+    title: 'ME LLAMA',
+    artist: 'MOMO (Beret Cover)',
+    year: 2019,
+    youtube_id: '5EouEAo9wy0',
+    preview_start: 30
+  },
+];
   }
   return count ? shuffled.slice(0, count) : shuffled;
 }
