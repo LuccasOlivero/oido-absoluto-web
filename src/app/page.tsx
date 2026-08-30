@@ -29,7 +29,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F7F4] flex flex-col font-sans">
+    <div className="min-h-screen text-stone-800 flex flex-col font-sans antialiased">
       {/* App Header */}
       <Header
         activeTab={activeTab}
