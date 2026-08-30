@@ -33,7 +33,7 @@ export function UnifiedGameModule({
   onPlay,
   onStop,
   year,
-  minYear = 1960,
+  minYear = 1990,
   maxYear = typeof window !== 'undefined' ? new Date().getFullYear() : 2026,
   onYearChange,
   onConfirm,
