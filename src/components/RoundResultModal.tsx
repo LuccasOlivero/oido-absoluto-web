@@ -111,10 +111,10 @@ export function RoundResultModal({
         {/* Song Card */}
         <div className="w-full flex items-center gap-4 bg-stone-50 p-3.5 rounded-2xl border border-stone-200/80">
           <div className="relative w-18 h-18 sm:w-20 sm:h-20 rounded-xl overflow-hidden shrink-0 border border-stone-200 shadow-xs">
-            {song.cover_url ? (
+            {song.cover_url || song.youtube_id ? (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
-                src={song.cover_url}
+                src={song.cover_url || `https://img.youtube.com/vi/${song.youtube_id}/mqdefault.jpg`}
                 alt={song.title}
                 className="w-full h-full object-cover"
               />
