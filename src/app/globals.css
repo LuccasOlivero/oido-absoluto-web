@@ -27,6 +27,7 @@ body {
   font-family: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Custom Minimalist Range Slider */
@@ -36,6 +37,10 @@ input[type="range"] {
   background: #e7e5e4;
   border-radius: 9999px;
   height: 8px;
+}
+
+input[type="range"]:focus {
+  outline: none;
 }
 
 input[type="range"]::-webkit-slider-thumb {

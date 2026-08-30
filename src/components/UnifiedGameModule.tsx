@@ -77,11 +77,11 @@ export function UnifiedGameModule({
       {/* 1. SECCIÓN: REPRODUCTOR DE FRAGMENTO */}
       <div className="w-full flex flex-col items-center gap-3.5 sm:gap-4">
         {/* Encabezado */}
-        <div className="w-full flex items-center justify-between px-0.5">
-          <span className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
+        <div className="w-full flex flex-col sm:flex-row items-center sm:justify-between px-0.5 gap-2 sm:gap-0">
+          <span className="text-xs font-semibold text-stone-500 uppercase tracking-wider text-center sm:text-left">
             1. Fragmento de Audio
           </span>
-          <span className="text-[11px] sm:text-xs font-medium text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-100">
+          <span className="text-[11px] sm:text-xs font-medium text-purple-700 bg-purple-50 px-2.5 py-1 sm:px-2 sm:py-0.5 rounded-full border border-purple-100 text-center">
             Menos tiempo = Más puntos
           </span>
         </div>
@@ -189,17 +189,17 @@ export function UnifiedGameModule({
       {/* 2. SECCIÓN: ADIVINAR EL AÑO */}
       <div className="w-full flex flex-col items-center gap-3.5 sm:gap-4">
         {/* Encabezado año */}
-        <div className="w-full flex items-center justify-between px-0.5">
-          <span className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
+        <div className="w-full flex flex-col sm:flex-row items-center sm:justify-between px-0.5 gap-2 sm:gap-0">
+          <span className="text-xs font-semibold text-stone-500 uppercase tracking-wider text-center sm:text-left">
             2. Año de Lanzamiento
           </span>
-          <span className="text-xs text-stone-400 font-mono">
+          <span className="text-xs text-stone-400 font-mono text-center">
             {minYear} - {currentYear}
           </span>
         </div>
 
         {/* Display del Año Seleccionado */}
-        <div className="py-2 px-8 bg-purple-50/90 border border-purple-200/80 rounded-2xl shadow-2xs overflow-hidden h-[72px] sm:h-[84px] flex items-center justify-center">
+        <div className="py-2 px-8 bg-purple-50/90 border border-purple-200/80 rounded-2xl shadow-2xs overflow-hidden h-[72px] sm:h-[84px] flex items-center justify-center select-none outline-none">
           <AnimatePresence mode="popLayout">
             <motion.span 
               key={year}
@@ -207,7 +207,7 @@ export function UnifiedGameModule({
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="text-4xl sm:text-5xl font-black tracking-tight text-purple-950 font-mono block"
+              className="text-4xl sm:text-5xl font-black tracking-tight text-purple-950 font-mono block outline-none select-none"
             >
               {year}
             </motion.span>
@@ -231,7 +231,7 @@ export function UnifiedGameModule({
                 onYearChange(Math.max(minYear, Math.min(currentYear, val)));
               }
             }}
-            className="w-full cursor-pointer touch-pan-x accent-purple-600 h-2 bg-purple-200/50 rounded-lg appearance-none"
+            className="w-full cursor-pointer touch-pan-x accent-purple-600 h-2 bg-purple-200/50 rounded-lg appearance-none outline-none focus:outline-none"
           />
           <div className="flex justify-between text-[11px] text-stone-400 font-mono px-0.5">
             <span>{minYear}</span>
