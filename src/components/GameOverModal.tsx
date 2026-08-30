@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CountryPicker } from './CountryPicker';
 import { Country } from '@/types';
 import { Trophy, RefreshCw, Globe, Sparkles, CheckCircle2 } from 'lucide-react';
 import { sfx } from '@/lib/audio-engine';
+import { detectCountryCode } from '@/lib/geo';
+import { getCountryByCode } from '@/lib/countries';
 
 interface GameOverModalProps {
   score: number;
@@ -32,6 +34,16 @@ export function GameOverModal({
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [isDetectingCountry, setIsDetectingCountry] = useState(true);
+
+  useEffect(() => {
+    async function autoDetect() {
+      const code = await detectCountryCode();
+      setSelectedCountry(getCountryByCode(code));
+      setIsDetectingCountry(false);
+    }
+    autoDetect();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

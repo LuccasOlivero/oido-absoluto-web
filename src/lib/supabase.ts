@@ -1,9 +1,13 @@
 import { Song, LeaderboardEntry } from '@/types';
 import { INITIAL_SONGS } from './songs-data';
 
+
+import { supabase } from './supabase-client';
+
 const LOCAL_STORAGE_LEADERBOARD_KEY = 'oido_absoluto_leaderboard_v2';
 
 const DEFAULT_MOCK_LEADERBOARD: LeaderboardEntry[] = [
+  // ... mock data will be kept for fallback
   {
     id: 'mock-1',
     player_name: 'Charly G.',
@@ -12,114 +16,6 @@ const DEFAULT_MOCK_LEADERBOARD: LeaderboardEntry[] = [
     songs_guessed: 18,
     exact_hits: 11,
     created_at: new Date(Date.now() - 1000 * 60 * 35).toISOString()
-  },
-  {
-    id: 'mock-2',
-    player_name: 'BeatleManiac',
-    country_code: 'GB',
-    score: 12400,
-    songs_guessed: 15,
-    exact_hits: 9,
-    created_at: new Date(Date.now() - 1000 * 60 * 120).toISOString()
-  },
-  {
-    id: 'mock-3',
-    player_name: 'VinylQueen',
-    country_code: 'ES',
-    score: 10950,
-    songs_guessed: 13,
-    exact_hits: 8,
-    created_at: new Date(Date.now() - 1000 * 60 * 240).toISOString()
-  },
-  {
-    id: 'mock-4',
-    player_name: 'RetroGamer99',
-    country_code: 'MX',
-    score: 9200,
-    songs_guessed: 11,
-    exact_hits: 6,
-    created_at: new Date(Date.now() - 1000 * 60 * 360).toISOString()
-  },
-  {
-    id: 'mock-5',
-    player_name: 'Rockero80s',
-    country_code: 'CL',
-    score: 7800,
-    songs_guessed: 9,
-    exact_hits: 5,
-    created_at: new Date(Date.now() - 1000 * 60 * 600).toISOString()
-  },
-  {
-    id: 'mock-6',
-    player_name: 'StereoSound',
-    country_code: 'US',
-    score: 6450,
-    songs_guessed: 8,
-    exact_hits: 4,
-    created_at: new Date(Date.now() - 1000 * 60 * 1440).toISOString()
-  },
-  {
-    id: 'mock-7',
-    player_name: 'Melomana_UY',
-    country_code: 'UY',
-    score: 5100,
-    songs_guessed: 6,
-    exact_hits: 3,
-    created_at: new Date(Date.now() - 1000 * 60 * 2880).toISOString()
-  },
-  {
-    id: 'mock-8',
-    player_name: 'CumbiaYRock',
-    country_code: 'CO',
-    score: 4200,
-    songs_guessed: 5,
-    exact_hits: 2,
-    created_at: new Date(Date.now() - 1000 * 60 * 4320).toISOString()
-  },
-  {
-    id: 'mock-9',
-    player_name: 'PopFan2000',
-    country_code: 'PE',
-    score: 3800,
-    songs_guessed: 4,
-    exact_hits: 2,
-    created_at: new Date(Date.now() - 1000 * 60 * 5000).toISOString()
-  },
-  {
-    id: 'mock-10',
-    player_name: 'JazzMaster',
-    country_code: 'BR',
-    score: 3100,
-    songs_guessed: 4,
-    exact_hits: 1,
-    created_at: new Date(Date.now() - 1000 * 60 * 6000).toISOString()
-  },
-  {
-    id: 'mock-11',
-    player_name: 'ReggaetonKing',
-    country_code: 'PR',
-    score: 2500,
-    songs_guessed: 3,
-    exact_hits: 1,
-    created_at: new Date(Date.now() - 1000 * 60 * 7000).toISOString()
-  },
-  {
-    id: 'mock-12',
-    player_name: 'IndieKid',
-    country_code: 'IT',
-    score: 1800,
-    songs_guessed: 2,
-    exact_hits: 0,
-    created_at: new Date(Date.now() - 1000 * 60 * 8000).toISOString()
-  },
-  {
-    id: 'mock-13',
-    player_name: 'NoobPlayer',
-    country_code: 'EC',
-    score: 950,
-    songs_guessed: 1,
-    exact_hits: 0,
-    created_at: new Date(Date.now() - 1000 * 60 * 9000).toISOString()
   }
 ];
 
@@ -128,6 +24,26 @@ export async function fetchSongs(): Promise<Song[]> {
 }
 
 export async function fetchLeaderboard(limit = 50): Promise<LeaderboardEntry[]> {
+  try {
+    const { data, error } = await supabase
+      .from('leaderboard')
+      .select('*')
+      .order('score', { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      console.error('Error fetching leaderboard from Supabase:', error);
+      throw error;
+    }
+
+    if (data && data.length > 0) {
+      return data as LeaderboardEntry[];
+    }
+  } catch (e) {
+    console.warn('Fallback to local mock data due to error:', e);
+  }
+
+  // Fallback
   if (typeof window !== 'undefined') {
     const local = localStorage.getItem(LOCAL_STORAGE_LEADERBOARD_KEY);
     if (local) {
@@ -138,8 +54,6 @@ export async function fetchLeaderboard(limit = 50): Promise<LeaderboardEntry[]> 
         console.error('Error parsing local leaderboard:', e);
       }
     }
-    // Inicializar localStorage con defaults
-    localStorage.setItem(LOCAL_STORAGE_LEADERBOARD_KEY, JSON.stringify(DEFAULT_MOCK_LEADERBOARD));
   }
 
   return DEFAULT_MOCK_LEADERBOARD.slice(0, limit);
@@ -152,21 +66,40 @@ export async function saveLeaderboardScore(entry: {
   songs_guessed: number;
   exact_hits: number;
 }): Promise<LeaderboardEntry> {
-  const newEntry: LeaderboardEntry = {
-    id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `lb-${Date.now()}`,
+  const newEntry = {
     player_name: entry.player_name.trim() || 'Melómano Anónimo',
     country_code: (entry.country_code || 'AR').toUpperCase(),
     score: entry.score,
     songs_guessed: entry.songs_guessed,
-    exact_hits: entry.exact_hits,
-    created_at: new Date().toISOString()
+    exact_hits: entry.exact_hits
   };
 
-  if (typeof window !== 'undefined') {
-    const current = await fetchLeaderboard(100);
-    const updated = [newEntry, ...current].sort((a, b) => b.score - a.score);
-    localStorage.setItem(LOCAL_STORAGE_LEADERBOARD_KEY, JSON.stringify(updated));
-  }
+  try {
+    const { data, error } = await supabase
+      .from('leaderboard')
+      .insert([newEntry])
+      .select()
+      .single();
 
-  return newEntry;
+    if (error) {
+      console.error('Error saving score to Supabase:', error);
+      throw error;
+    }
+    
+    return data as LeaderboardEntry;
+  } catch (e) {
+    console.error('Failed to save to Supabase, fallback to local storage:', e);
+    // Fallback logic
+    const fallbackEntry: LeaderboardEntry = {
+      id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `lb-${Date.now()}`,
+      ...newEntry,
+      created_at: new Date().toISOString()
+    };
+    if (typeof window !== 'undefined') {
+      const current = await fetchLeaderboard(100);
+      const updated = [fallbackEntry, ...current].sort((a, b) => b.score - a.score);
+      localStorage.setItem(LOCAL_STORAGE_LEADERBOARD_KEY, JSON.stringify(updated));
+    }
+    return fallbackEntry;
+  }
 }
