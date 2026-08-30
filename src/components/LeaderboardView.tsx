@@ -154,24 +154,32 @@ export function LeaderboardView({ onPlayClick }: LeaderboardViewProps) {
           </div>
 
           {/* 1st Place */}
-          <div className="order-1 sm:order-2 bg-amber-50/90 border-2 border-amber-200/90 rounded-2xl p-4 sm:p-5 flex sm:flex-col items-center justify-between sm:justify-center text-left sm:text-center shadow-sm">
-            <div className="flex items-center sm:flex-col gap-3 sm:gap-2">
-              <FlagImage code={top3[0].country_code} className="w-10 h-7 sm:w-12 sm:h-9 shadow-[0_2px_5px_rgba(0,0,0,0.15)]" />
-              <div>
-                <div className="text-[10px] font-bold px-2.5 py-0.5 bg-amber-200 text-amber-900 rounded-full inline-flex items-center gap-1 sm:mb-1">
-                  <span>🥇 1º Campeón</span>
-                  <Flame className="w-3 h-3 text-amber-700" />
+          <div className="order-1 sm:order-2 bg-gradient-to-b from-amber-100 to-amber-50 border-2 border-amber-300/80 rounded-3xl p-5 sm:p-6 flex flex-col items-center justify-center text-center shadow-lg relative overflow-hidden sm:-translate-y-2">
+            <div className="absolute top-0 w-full h-1.5 bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-300"></div>
+            
+            <div className="flex flex-col items-center gap-2">
+              <div className="relative mb-1">
+                <FlagImage code={top3[0].country_code} className="w-14 h-10 sm:w-16 sm:h-12 shadow-[0_4px_10px_rgba(0,0,0,0.15)] rounded-sm" />
+                <div className="absolute -bottom-2 -right-2 bg-white rounded-full p-0.5 shadow-sm border border-amber-100">
+                  <span className="text-lg sm:text-xl leading-none">👑</span>
                 </div>
-                <h3 className="font-extrabold text-amber-950 text-base truncate">
+              </div>
+              
+              <div className="flex flex-col items-center">
+                <div className="text-[10px] sm:text-xs font-black px-3 py-1 bg-amber-200 text-amber-900 rounded-full inline-block shadow-xs tracking-wider mb-1.5">
+                  🥇 1º PUESTO
+                </div>
+                <h3 className="font-black text-amber-950 text-xl sm:text-2xl truncate max-w-[200px] sm:max-w-[220px]">
                   {top3[0].player_name}
                 </h3>
-                <span className="text-[11px] text-amber-700 font-medium block">
+                <span className="text-[10px] sm:text-xs text-amber-700/80 font-bold uppercase tracking-wider block mt-0.5 mb-1">
                   {getCountryByCode(top3[0].country_code).name}
                 </span>
               </div>
             </div>
-            <span className="text-xl sm:text-2xl font-black text-amber-900 font-mono sm:mt-1.5">
-              {top3[0].score.toLocaleString()} <span className="text-xs text-amber-700">pts</span>
+            
+            <span className="text-3xl sm:text-4xl font-black text-amber-600 font-mono mt-2 drop-shadow-sm">
+              {top3[0].score.toLocaleString()} <span className="text-sm sm:text-base text-amber-500/80 font-bold">pts</span>
             </span>
           </div>
 
