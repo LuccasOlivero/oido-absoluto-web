@@ -243,7 +243,7 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
               isSnippetActiveRef.current = true;
               playerRef.current.playVideo();
               
-              if (playerRef.current.getPlayerState && playerRef.current.getPlayerState() === 1 && progressIntervalRef.current === null) {
+              if ((playerRef.current as any).getPlayerState && (playerRef.current as any).getPlayerState() === 1 && progressIntervalRef.current === null) {
                 startProgressTracking();
               }
             } catch {
