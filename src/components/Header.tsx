@@ -26,11 +26,12 @@ export function Header({
       <div className="w-full bg-white/70 backdrop-blur-2xl border border-white/80 shadow-[0_8px_30px_rgba(0,0,0,0.06)] rounded-3xl px-3 sm:px-5 py-3 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 transition-all">
         
         {/* Top Row on Mobile: Brand Logo + Controls */}
-        <div className="flex items-center justify-between w-full sm:w-auto relative">
+        {/* Top Row on Mobile: Brand Logo + Controls */}
+        <div className="flex items-center justify-between w-full sm:w-auto">
           {/* Logo / Título */}
           <div
             onClick={() => onSelectTab('game')}
-            className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group"
+            className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group shrink-0"
           >
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-cyan-400 via-purple-500 to-fuchsia-500 text-white flex items-center justify-center border-2 border-white/50 shadow-[0_0_15px_rgba(217,70,239,0.5)] group-hover:scale-105 group-hover:rotate-3 transition-all">
               <Headphones className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
@@ -45,22 +46,24 @@ export function Header({
             </div>
           </div>
 
-          {/* Mobile Lives (Absolute Center) */}
-          <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-1 bg-rose-50/90 px-2.5 py-1.5 rounded-xl border border-rose-200/50 shadow-xs sm:hidden">
-            {Array.from({ length: maxLives }).map((_, i) => (
-              <span
-                key={i}
-                className={`text-sm transition-all duration-300 ${
-                  i < lives ? 'scale-100 opacity-100 drop-shadow-[0_0_2px_rgba(244,63,94,0.5)]' : 'grayscale opacity-25 scale-75'
-                }`}
-              >
-                ❤️
-              </span>
-            ))}
+          {/* Mobile Lives (Flexible Center) */}
+          <div className="flex-1 flex justify-center sm:hidden px-1 min-w-0">
+            <div className="flex items-center gap-1 bg-rose-50/90 px-2.5 py-1.5 rounded-xl border border-rose-200/50 shadow-xs">
+              {Array.from({ length: maxLives }).map((_, i) => (
+                <span
+                  key={i}
+                  className={`text-sm transition-all duration-300 ${
+                    i < lives ? 'scale-100 opacity-100 drop-shadow-[0_0_2px_rgba(244,63,94,0.5)]' : 'grayscale opacity-25 scale-75'
+                  }`}
+                >
+                  ❤️
+                </span>
+              ))}
+            </div>
           </div>
 
           {/* HUD in mobile top right (Score only) */}
-          <div className="flex items-center gap-1.5 sm:hidden">
+          <div className="flex items-center justify-end sm:hidden shrink-0">
             {/* Score */}
             <div className="flex items-center gap-1 bg-gradient-to-br from-stone-900 to-stone-800 px-2.5 py-1.5 rounded-xl border border-stone-700 shadow-xs text-sm font-bold text-amber-400 font-mono">
               <span>{score.toLocaleString()}</span>
