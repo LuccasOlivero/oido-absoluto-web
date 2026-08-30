@@ -26,7 +26,7 @@ export function Header({
       <div className="w-full bg-white/70 backdrop-blur-2xl border border-white/80 shadow-[0_8px_30px_rgba(0,0,0,0.06)] rounded-3xl px-3 sm:px-5 py-3 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 transition-all">
         
         {/* Top Row on Mobile: Brand Logo + Controls */}
-        <div className="flex items-center justify-between w-full sm:w-auto">
+        <div className="flex items-center justify-between w-full sm:w-auto relative">
           {/* Logo / Título */}
           <div
             onClick={() => onSelectTab('game')}
@@ -45,32 +45,31 @@ export function Header({
             </div>
           </div>
 
-          {/* HUD in mobile top right */}
-          <div className="flex items-center gap-1.5 sm:hidden">
-            {/* Lives */}
-            <div className="flex items-center gap-0.5 bg-rose-50/90 px-2 py-1 rounded-xl border border-rose-200/50 shadow-xs">
-              {Array.from({ length: maxLives }).map((_, i) => (
-                <span
-                  key={i}
-                  className={`text-xs transition-all duration-300 ${
-                    i < lives ? 'scale-100 opacity-100 drop-shadow-[0_0_2px_rgba(244,63,94,0.5)]' : 'grayscale opacity-25 scale-75'
-                  }`}
-                >
-                  ❤️
-                </span>
-              ))}
-            </div>
+          {/* Mobile Lives (Absolute Center) */}
+          <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-1 bg-rose-50/90 px-2.5 py-1.5 rounded-xl border border-rose-200/50 shadow-xs sm:hidden">
+            {Array.from({ length: maxLives }).map((_, i) => (
+              <span
+                key={i}
+                className={`text-sm transition-all duration-300 ${
+                  i < lives ? 'scale-100 opacity-100 drop-shadow-[0_0_2px_rgba(244,63,94,0.5)]' : 'grayscale opacity-25 scale-75'
+                }`}
+              >
+                ❤️
+              </span>
+            ))}
+          </div>
 
+          {/* HUD in mobile top right (Score only) */}
+          <div className="flex items-center gap-1.5 sm:hidden">
             {/* Score */}
-            <div className="flex items-center gap-1 bg-gradient-to-br from-stone-900 to-stone-800 px-2.5 py-1 rounded-xl border border-stone-700 shadow-xs text-xs font-bold text-amber-400 font-mono">
+            <div className="flex items-center gap-1 bg-gradient-to-br from-stone-900 to-stone-800 px-2.5 py-1.5 rounded-xl border border-stone-700 shadow-xs text-sm font-bold text-amber-400 font-mono">
               <span>{score.toLocaleString()}</span>
               {multiplier > 1.0 && (
-                <span className="text-[9px] text-cyan-300 bg-cyan-900/50 border border-cyan-800 px-1 rounded shadow-[0_0_5px_rgba(6,182,212,0.4)]">
+                <span className="text-[10px] text-cyan-300 bg-cyan-900/50 border border-cyan-800 px-1 rounded shadow-[0_0_5px_rgba(6,182,212,0.4)]">
                   x{multiplier.toFixed(1)}
                 </span>
               )}
             </div>
-
           </div>
         </div>
 
