@@ -242,6 +242,7 @@ export class SnippetAudioPlayer {
     if (!this.audio) return;
     this.clearTimers();
     this.lastStartTime = startTime;
+    this.onProgressChange?.(0);
 
     const startPlay = () => {
       if (!this.audio) return;
@@ -299,6 +300,7 @@ export class SnippetAudioPlayer {
   public playFullSong(startTime = 0) {
     if (!this.audio) return;
     this.clearTimers();
+    this.onProgressChange?.(0);
 
     const startFull = () => {
       if (!this.audio) return;
@@ -347,6 +349,7 @@ export class SnippetAudioPlayer {
         // ignore pause error
       }
       this.handleStop();
+      this.onProgressChange?.(0);
     };
 
     if (this.playPromise) {
@@ -359,7 +362,6 @@ export class SnippetAudioPlayer {
   private handleStop() {
     this.isPlaying = false;
     this.onPlayStateChange?.(false);
-    this.onProgressChange?.(0);
   }
 
   public destroy() {

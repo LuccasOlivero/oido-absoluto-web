@@ -14,6 +14,7 @@ export type SnippetDuration = 1 | 3 | 5;
 
 export interface LeaderboardEntry {
   id: string;
+  user_id?: string;
   player_name: string;
   country_code: string;
   score: number;

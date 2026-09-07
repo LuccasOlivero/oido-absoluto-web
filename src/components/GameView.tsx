@@ -23,6 +23,7 @@ interface GameViewProps {
     exactHits: number;
   }) => void;
   onViewLeaderboard: () => void;
+  onGameStatusChange?: (status: GameStatus) => void;
 }
 
 export function GameView({
@@ -31,22 +32,29 @@ export function GameView({
   score,
   multiplier,
   onUpdateState,
-  onViewLeaderboard
+  onViewLeaderboard,
+  onGameStatusChange
 }: GameViewProps) {
   const currentYear = new Date().getFullYear();
 
   // Game session states
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [selectedSnippet, setSelectedSnippet] = useState<SnippetDuration>(1);
-  const [selectedYear, setSelectedYear] = useState<number>(1990);
+  const [selectedYear, setSelectedYear] = useState<number>(Math.floor((1990 + currentYear) / 2));
   
-  useEffect(() => {
-    setSelectedYear(1990 + Math.floor(Math.random() * (new Date().getFullYear() - 1990 + 1)));
-  }, []);
+
   const [isPlayingSnippet, setIsPlayingSnippet] = useState(false);
+  const [isBuffering, setIsBuffering] = useState(false);
   const [snippetProgress, setSnippetProgress] = useState(0);
   const [gameStatus, setGameStatus] = useState<GameStatus>('idle');
   const [lastResult, setLastResult] = useState<RoundResult | null>(null);
+
+  useEffect(() => {
+    if (onGameStatusChange) {
+      onGameStatusChange(gameStatus);
+    }
+  }, [gameStatus, onGameStatusChange]);
+
   const [songsGuessed, setSongsGuessed] = useState(0);
   const [exactHits, setExactHits] = useState(0);
   const [isPlayingFull, setIsPlayingFull] = useState(false);
@@ -88,6 +96,10 @@ export function GameView({
 
   // Handle playing snippet (prioritizes YouTube, with fallback to HTML5 audio)
   const handlePlaySnippet = () => {
+    if (gameStatus === 'idle') {
+      setGameStatus('playing');
+    }
+    
     if (!currentSong) return;
     const startOffset = (currentSong.preview_start || 0) + 5;
 
@@ -220,7 +232,7 @@ export function GameView({
     setGameStatus('playing');
     setLastResult(null);
     setSelectedSnippet(1);
-    setSelectedYear(1990 + Math.floor(Math.random() * (currentYear - 1990 + 1)));
+    setSelectedYear(Math.floor((1990 + currentYear) / 2));
     setCurrentSongIndex((prev) => prev + 1);
   };
 
@@ -228,10 +240,10 @@ export function GameView({
   const handleRestart = () => {
     handleStopSnippet();
     setIsPlayingFull(false);
-    setGameStatus('playing');
+    setGameStatus('idle');
     setLastResult(null);
     setSelectedSnippet(1);
-    setSelectedYear(1990 + Math.floor(Math.random() * (currentYear - 1990 + 1)));
+    setSelectedYear(Math.floor((1990 + currentYear) / 2));
     setSongsGuessed(0);
     setExactHits(0);
     setCurrentSongIndex(0);
@@ -242,19 +254,6 @@ export function GameView({
       songsGuessed: 0,
       exactHits: 0
     });
-  };
-
-  // Save leaderboard score
-  const handleSaveScore = async (playerName: string, countryCode: string) => {
-    await saveLeaderboardScore({
-      player_name: playerName,
-      country_code: countryCode,
-      score,
-      songs_guessed: songsGuessed,
-      exact_hits: exactHits
-    });
-    setGameStatus('idle');
-    onViewLeaderboard();
   };
 
   return (
@@ -268,28 +267,22 @@ export function GameView({
           if (!playing) setIsPlayingFull(false);
         }}
         onProgressChange={(prog) => setSnippetProgress(prog)}
+        onBufferingStateChange={(buffering: boolean) => setIsBuffering(buffering)}
         onErrorFallback={() => {
-          console.warn('[Oído Absoluto] YouTube playback failed for:', currentSong?.title);
+          console.warn('[TimePitch] YouTube playback failed for:', currentSong?.title);
+          setIsPlayingSnippet(false);
+          setIsBuffering(false);
+          // Show alert and automatically move to next round without losing life
+          alert(`Error al cargar el video de YouTube para "${currentSong?.title}". Saltando a la siguiente canción...`);
+          handleNextRound();
         }}
       />
-
-      {/* Round Header & Progress Info */}
-      <div className="w-full flex items-center justify-between px-2 text-stone-500 text-xs font-mono">
-        <div className="flex items-center gap-1.5 font-semibold">
-          <Music4 className="w-3.5 h-3.5 text-purple-600" />
-          <span>Ronda #{currentSongIndex + 1}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span>Aciertos: <strong className="text-stone-800">{songsGuessed}</strong></span>
-          <span>•</span>
-          <span>Exactos: <strong className="text-purple-700">{exactHits}</strong></span>
-        </div>
-      </div>
 
       {/* Unified Control Module */}
       <UnifiedGameModule
         selectedSnippet={selectedSnippet}
         isPlaying={isPlayingSnippet}
+        isBuffering={isBuffering}
         progress={snippetProgress}
         onSelectSnippet={(dur) => {
           handleStopSnippet();
@@ -323,7 +316,6 @@ export function GameView({
           exactHits={exactHits}
           onRestart={handleRestart}
           onViewLeaderboard={onViewLeaderboard}
-          onSubmitScore={handleSaveScore}
         />
       )}
     </div>

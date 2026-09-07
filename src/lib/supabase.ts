@@ -2,22 +2,13 @@ import { Song, LeaderboardEntry } from '@/types';
 import { INITIAL_SONGS } from './songs-data';
 
 
-import { supabase } from './supabase-client';
+import { createClient } from './supabase/client';
 
-const LOCAL_STORAGE_LEADERBOARD_KEY = 'oido_absoluto_leaderboard_v2';
+const supabase = createClient();
 
-const DEFAULT_MOCK_LEADERBOARD: LeaderboardEntry[] = [
-  // ... mock data will be kept for fallback
-  {
-    id: 'mock-1',
-    player_name: 'Charly G.',
-    country_code: 'AR',
-    score: 14850,
-    songs_guessed: 18,
-    exact_hits: 11,
-    created_at: new Date(Date.now() - 1000 * 60 * 35).toISOString()
-  }
-];
+const LOCAL_STORAGE_LEADERBOARD_KEY = 'oido_absoluto_leaderboard_v3';
+
+const DEFAULT_MOCK_LEADERBOARD: LeaderboardEntry[] = [];
 
 export async function fetchSongs(): Promise<Song[]> {
   return INITIAL_SONGS;
@@ -65,41 +56,56 @@ export async function saveLeaderboardScore(entry: {
   score: number;
   songs_guessed: number;
   exact_hits: number;
-}): Promise<LeaderboardEntry> {
+}): Promise<LeaderboardEntry | null> {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) return null; // Only logged in users can save scores
+
   const newEntry = {
+    user_id: user.id,
     player_name: entry.player_name.trim() || 'Melómano Anónimo',
     country_code: (entry.country_code || 'AR').toUpperCase(),
     score: entry.score,
     songs_guessed: entry.songs_guessed,
-    exact_hits: entry.exact_hits
+    exact_hits: entry.exact_hits,
+    created_at: new Date().toISOString()
   };
 
   try {
-    const { data, error } = await supabase
+    // Check if user already has a score
+    const { data: existing } = await supabase
       .from('leaderboard')
-      .insert([newEntry])
-      .select()
-      .single();
+      .select('id, score')
+      .eq('user_id', user.id)
+      .maybeSingle();
 
-    if (error) {
-      console.error('Error saving score to Supabase:', error);
-      throw error;
+    if (existing) {
+      if (entry.score > existing.score) {
+        // Update if new score is higher
+        const { data, error } = await supabase
+          .from('leaderboard')
+          .update(newEntry)
+          .eq('id', existing.id)
+          .select()
+          .single();
+        if (error) throw error;
+        return data as LeaderboardEntry;
+      } else {
+        // Score is lower, don't update
+        return null;
+      }
+    } else {
+      // Insert new score
+      const { data, error } = await supabase
+        .from('leaderboard')
+        .insert([newEntry])
+        .select()
+        .single();
+      if (error) throw error;
+      return data as LeaderboardEntry;
     }
-    
-    return data as LeaderboardEntry;
   } catch (e) {
-    console.error('Failed to save to Supabase, fallback to local storage:', e);
-    // Fallback logic
-    const fallbackEntry: LeaderboardEntry = {
-      id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `lb-${Date.now()}`,
-      ...newEntry,
-      created_at: new Date().toISOString()
-    };
-    if (typeof window !== 'undefined') {
-      const current = await fetchLeaderboard(100);
-      const updated = [fallbackEntry, ...current].sort((a, b) => b.score - a.score);
-      localStorage.setItem(LOCAL_STORAGE_LEADERBOARD_KEY, JSON.stringify(updated));
-    }
-    return fallbackEntry;
+    console.error('Failed to save to Supabase:', e);
+    return null;
   }
 }

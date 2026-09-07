@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Oído Absoluto 🎧 | Adivina el Año Musical",
-  description: "Juego musical minimalista: escucha fragmentos de 1s, 3s o 5s y adivina el año de lanzamiento para llegar al Ranking Mundial.",
+  title: "TimePitch 👾 | Neon Cyberpunk Arcade",
+  description: "High-octane musical game: scan audio snippets of 1s, 3s or 5s and decode the release year to reach the Global Network.",
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col text-stone-800 selection:bg-purple-200 selection:text-purple-900">
+      <body className="min-h-full flex flex-col text-stone-300 selection:bg-cyan-900/50 selection:text-cyan-400">
         {children}
       </body>
     </html>

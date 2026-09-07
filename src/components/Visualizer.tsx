@@ -48,8 +48,8 @@ export function Visualizer({ isPlaying, intensity = 1 }: VisualizerProps) {
           gradient.addColorStop(0.5, '#d946ef'); // fuchsia-500
           gradient.addColorStop(1, '#f59e0b'); // amber-500
         } else {
-          gradient.addColorStop(0, '#e7e5e4'); // stone-200
-          gradient.addColorStop(1, '#d6d3d1'); // stone-300
+          gradient.addColorStop(0, '#44403c'); // stone-700
+          gradient.addColorStop(1, '#292524'); // stone-800
         }
 
         ctx.fillStyle = gradient;
@@ -74,7 +74,7 @@ export function Visualizer({ isPlaying, intensity = 1 }: VisualizerProps) {
   }, [isPlaying, intensity]);
 
   return (
-    <div className="w-full h-14 flex items-center justify-center bg-stone-100/80 rounded-2xl p-2 border border-stone-200/60 shadow-inner">
+    <div className="w-full h-14 flex items-center justify-center bg-black/40 rounded-2xl p-2 border border-stone-800 shadow-inner">
       <canvas
         ref={canvasRef}
         width={300}

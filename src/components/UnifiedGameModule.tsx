@@ -11,6 +11,7 @@ interface UnifiedGameModuleProps {
   // Audio & snippet props
   selectedSnippet: SnippetDuration;
   isPlaying: boolean;
+  isBuffering?: boolean;
   progress: number;
   onSelectSnippet: (duration: SnippetDuration) => void;
   onPlay: () => void;
@@ -29,6 +30,7 @@ interface UnifiedGameModuleProps {
 export function UnifiedGameModule({
   selectedSnippet,
   isPlaying,
+  isBuffering,
   progress,
   onSelectSnippet,
   onPlay,
@@ -48,40 +50,44 @@ export function UnifiedGameModule({
     points: number;
     icon: typeof Sparkles;
     activeStyle: string;
+    inactiveStyle: string;
   }[] = [
     {
       duration: 1,
       label: '1.0s',
       points: 1000,
       icon: Sparkles,
-      activeStyle: 'bg-amber-50 border-amber-300 text-amber-900 ring-2 ring-amber-200/70 shadow-xs'
+      activeStyle: 'bg-cyan-950/50 border-cyan-500 text-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.4)]',
+      inactiveStyle: 'bg-cyan-950/10 border-cyan-900/40 text-cyan-700 hover:bg-cyan-950/30 hover:border-cyan-700 hover:text-cyan-500 hover:shadow-[0_0_10px_rgba(34,211,238,0.1)]'
     },
     {
       duration: 3,
       label: '3.0s',
       points: 600,
       icon: Zap,
-      activeStyle: 'bg-purple-50 border-purple-300 text-purple-900 ring-2 ring-purple-200/70 shadow-xs'
+      activeStyle: 'bg-fuchsia-950/50 border-fuchsia-500 text-fuchsia-400 shadow-[0_0_12px_rgba(217,70,239,0.4)]',
+      inactiveStyle: 'bg-fuchsia-950/10 border-fuchsia-900/40 text-fuchsia-700 hover:bg-fuchsia-950/30 hover:border-fuchsia-700 hover:text-fuchsia-500 hover:shadow-[0_0_10px_rgba(217,70,239,0.1)]'
     },
     {
       duration: 5,
       label: '5.0s',
       points: 300,
       icon: Search,
-      activeStyle: 'bg-emerald-50 border-emerald-300 text-emerald-900 ring-2 ring-emerald-200/70 shadow-xs'
+      activeStyle: 'bg-amber-950/50 border-amber-500 text-amber-400 shadow-[0_0_12px_rgba(252,211,77,0.4)]',
+      inactiveStyle: 'bg-amber-950/10 border-amber-900/40 text-amber-700 hover:bg-amber-950/30 hover:border-amber-700 hover:text-amber-500 hover:shadow-[0_0_10px_rgba(252,211,77,0.1)]'
     }
   ];
 
   return (
-    <div className="w-full bg-white border border-stone-200/90 rounded-3xl p-4 sm:p-7 shadow-xs flex flex-col gap-5 sm:gap-6">
+    <div className="w-full bg-black border border-stone-800 rounded-3xl p-4 sm:p-7 shadow-[0_0_30px_rgba(0,0,0,0.5)] flex flex-col gap-5 sm:gap-6">
       {/* 1. SECCIÓN: REPRODUCTOR DE FRAGMENTO */}
       <div className="w-full flex flex-col items-center gap-3.5 sm:gap-4">
         {/* Encabezado */}
         <div className="w-full flex flex-col sm:flex-row items-center sm:justify-between px-0.5 gap-2 sm:gap-0">
-          <span className="text-xs font-semibold text-stone-500 uppercase tracking-wider text-center sm:text-left">
+          <span className="text-xs font-bold text-cyan-500 uppercase tracking-wider text-center sm:text-left drop-shadow-[0_0_5px_rgba(34,211,238,0.3)]">
             1. Fragmento de Audio
           </span>
-          <span className="text-[11px] sm:text-xs font-medium text-purple-700 bg-purple-50 px-2.5 py-1 sm:px-2 sm:py-0.5 rounded-full border border-purple-100 text-center">
+          <span className="text-[11px] sm:text-xs font-bold text-fuchsia-400 bg-fuchsia-950/30 px-2.5 py-1 sm:px-2 sm:py-0.5 rounded-full border border-fuchsia-900/50 text-center shadow-[0_0_8px_rgba(217,70,239,0.2)]">
             Menos tiempo = Más puntos
           </span>
         </div>
@@ -106,11 +112,9 @@ export function UnifiedGameModule({
                   onSelectSnippet(snip.duration);
                 }}
                 className={`relative flex flex-col items-center justify-center py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-2xl border transition-all duration-150 ${
-                  isSelected
-                    ? snip.activeStyle
-                    : 'bg-stone-50/70 border-stone-200/70 text-stone-600 hover:bg-stone-100 hover:text-stone-900'
+                  isSelected ? snip.activeStyle : snip.inactiveStyle
                 } ${
-                  isLocked ? 'opacity-40 grayscale cursor-not-allowed' : buttonDisabled ? 'opacity-50 cursor-not-allowed' : 'active:scale-98 cursor-pointer'
+                  isLocked ? 'opacity-30 grayscale cursor-not-allowed' : buttonDisabled ? 'opacity-50 cursor-not-allowed' : 'active:scale-95 cursor-pointer'
                 }`}
               >
                 <div className="flex items-center gap-1 mb-0.5">
@@ -119,8 +123,8 @@ export function UnifiedGameModule({
                     {snip.label}
                   </span>
                 </div>
-                <div className="text-[10px] sm:text-[11px] font-semibold opacity-85">
-                  {isLocked ? 'Bloqueado' : `+${snip.points} pts`}
+                <div className="text-[11px] font-bold opacity-90 tracking-wide uppercase">
+                  {isLocked ? 'Bloq' : `+${snip.points} pts`}
                 </div>
               </button>
             );
@@ -132,15 +136,15 @@ export function UnifiedGameModule({
 
         {/* Barra de progreso del fragmento */}
         <div className="w-full max-w-xs flex flex-col gap-1">
-          <div className="w-full bg-stone-100 rounded-full h-1.5 overflow-hidden">
+          <div className="w-full bg-stone-900 rounded-full h-1.5 overflow-hidden border border-stone-800">
             <div
-              className="h-full bg-gradient-to-r from-purple-400 via-pink-300 to-amber-300 transition-all duration-75 rounded-full"
+              className="h-full bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-amber-500 transition-none rounded-full shadow-[0_0_8px_rgba(217,70,239,0.8)]"
               style={{ width: `${Math.round(progress * 100)}%` }}
             />
           </div>
-          <div className="flex justify-between text-[10px] font-mono text-stone-400">
+          <div className="flex justify-between text-[11px] font-mono font-bold text-stone-500">
             <span>0.0s</span>
-            <span className="text-purple-700 font-semibold">{selectedSnippet}s</span>
+            <span className="text-cyan-400 drop-shadow-[0_0_4px_rgba(34,211,238,0.5)]">{selectedSnippet}s</span>
           </div>
         </div>
 
@@ -156,33 +160,30 @@ export function UnifiedGameModule({
                 onPlay();
               }
             }}
-            className={`flex items-center justify-center w-16 h-16 sm:w-18 sm:h-18 rounded-full transition-all duration-200 cursor-pointer ${
+            className={`flex items-center justify-center w-16 h-16 sm:w-18 sm:h-18 rounded-full transition-all duration-200 cursor-pointer border-2 ${
               isPlaying
-                ? 'bg-rose-500 hover:bg-rose-600 text-white shadow-md shadow-rose-500/25 scale-105'
-                : 'bg-purple-600 hover:bg-purple-700 text-white shadow-md shadow-purple-600/25 hover:scale-105 active:scale-95'
+                ? 'bg-red-950 border-red-500 text-red-500 shadow-[0_0_20px_rgba(239,68,68,0.6)] scale-105'
+                : 'bg-black border-cyan-400 text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.4)] hover:bg-cyan-950/30 hover:scale-105 active:scale-95'
             } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
             title={isPlaying ? 'Pausar' : 'Reproducir'}
           >
             {isPlaying ? (
-              <Square className="w-6 h-6 fill-white animate-pulse" />
+              <Square className="w-6 h-6 fill-current animate-pulse" />
             ) : (
-              <Play className="w-6 h-6 fill-white ml-0.5" />
+              <Play className="w-6 h-6 fill-current ml-0.5" />
             )}
           </button>
           <div className="text-center">
-            <p className="text-xs font-semibold text-stone-700">
+            <p className="text-xs font-bold text-stone-400 uppercase tracking-wide">
               {isPlaying ? 'Reproduciendo audio...' : 'Toca para reproducir'}
-            </p>
-            <p className="text-[10px] text-stone-400 sm:hidden">
-              Puedes repetir las veces que quieras
             </p>
           </div>
         </div>
       </div>
 
       {/* DIVISOR SUTIL */}
-      <div className="w-full border-t border-stone-100 relative my-0.5">
-        <div className="absolute left-1/2 -top-2.5 -translate-x-1/2 px-2.5 py-0.5 bg-stone-100 text-[10px] uppercase font-bold text-stone-400 rounded-full">
+      <div className="w-full border-t border-stone-800 relative my-0.5">
+        <div className="absolute left-1/2 -top-2.5 -translate-x-1/2 px-3 py-0.5 bg-black border border-stone-800 text-[10px] uppercase font-bold text-cyan-600 rounded-full shadow-[0_0_5px_rgba(34,211,238,0.1)]">
           Adivina el año
         </div>
       </div>
@@ -191,16 +192,16 @@ export function UnifiedGameModule({
       <div className="w-full flex flex-col items-center gap-3.5 sm:gap-4">
         {/* Encabezado año */}
         <div className="w-full flex flex-col sm:flex-row items-center sm:justify-between px-0.5 gap-2 sm:gap-0">
-          <span className="text-xs font-semibold text-stone-500 uppercase tracking-wider text-center sm:text-left">
+          <span className="text-xs font-bold text-cyan-500 uppercase tracking-wider text-center sm:text-left drop-shadow-[0_0_5px_rgba(34,211,238,0.3)]">
             2. Año de Lanzamiento
           </span>
-          <span className="text-xs text-stone-400 font-mono text-center">
+          <span className="text-xs text-stone-500 font-mono text-center">
             {minYear} - {currentYear}
           </span>
         </div>
 
         {/* Display del Año Seleccionado */}
-        <div className="py-2 px-8 bg-purple-50/90 border border-purple-200/80 rounded-2xl shadow-2xs overflow-hidden h-[72px] sm:h-[84px] flex items-center justify-center select-none outline-none">
+        <div className="py-2 px-8 bg-black border border-fuchsia-900/50 rounded-2xl shadow-[0_0_15px_rgba(217,70,239,0.15)] overflow-hidden h-[72px] sm:h-[84px] flex items-center justify-center select-none outline-none w-full max-w-[240px]">
           <AnimatePresence mode="popLayout">
             <motion.span 
               key={year}
@@ -208,15 +209,12 @@ export function UnifiedGameModule({
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="text-4xl sm:text-5xl font-black tracking-tight text-purple-950 font-mono block outline-none select-none"
+              className="text-4xl sm:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-fuchsia-400 to-fuchsia-600 font-mono block outline-none select-none drop-shadow-[0_0_8px_rgba(217,70,239,0.5)]"
             >
               {year}
             </motion.span>
           </AnimatePresence>
         </div>
-
-        {/* Botones de ajuste fino (-5, -1, +1, +5) y décadas */}
-        {/* Botones de ajuste fino y décadas removidos según lo solicitado, se usa el slider */}
 
         {/* Slider interactivo táctil */}
         <div className="w-full flex flex-col gap-1.5 pt-1">
@@ -232,9 +230,9 @@ export function UnifiedGameModule({
                 onYearChange(Math.max(minYear, Math.min(currentYear, val)));
               }
             }}
-            className="w-full cursor-pointer touch-pan-x accent-purple-600 h-2 bg-purple-200/50 rounded-lg appearance-none outline-none focus:outline-none"
+            className="w-full cursor-pointer touch-pan-x"
           />
-          <div className="flex justify-between text-[11px] text-stone-400 font-mono px-0.5">
+          <div className="flex justify-between text-[11px] text-stone-500 font-mono px-0.5 font-bold">
             <span>{minYear}</span>
             <span>1980</span>
             <span>2000</span>
@@ -250,10 +248,10 @@ export function UnifiedGameModule({
             sfx.playClick();
             onConfirm();
           }}
-          className="w-full py-3.5 sm:py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base sm:text-lg flex items-center justify-center gap-2 shadow-xs active:scale-[0.99] transition-all cursor-pointer disabled:opacity-50"
+          className="w-full py-3.5 sm:py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-black uppercase tracking-widest text-base sm:text-lg flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(245,158,11,0.4)] active:scale-[0.98] transition-all cursor-pointer disabled:opacity-50 disabled:grayscale border border-amber-400/50"
         >
-          <CheckCircle2 className="w-5 h-5" />
-          <span>Confirmar Año {year}</span>
+          <CheckCircle2 className="w-5 h-5 drop-shadow-md" />
+          <span className="drop-shadow-md">Confirmar Año {year}</span>
         </button>
       </div>
     </div>

@@ -6,6 +6,7 @@ import { GameView } from "@/components/GameView";
 import { LeaderboardView } from "@/components/LeaderboardView";
 import { Song } from "@/types";
 import { INITIAL_SONGS, getRandomSongs } from "@/lib/songs-data";
+import { GameStatus } from "@/types";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<"game" | "leaderboard">("game");
@@ -13,6 +14,7 @@ export default function Home() {
   const [lives, setLives] = useState(3);
   const [score, setScore] = useState(0);
   const [multiplier, setMultiplier] = useState(1.0);
+  const [gameStatus, setGameStatus] = useState<GameStatus>("idle");
 
   useEffect(() => {
     setSongs(getRandomSongs());
@@ -28,15 +30,28 @@ export default function Home() {
     setMultiplier(state.multiplier);
   };
 
+  const handleNavigation = (target: "game" | "leaderboard") => {
+    if (target === "game" && lives <= 0) {
+      // Reset game state if returning to game after dying
+      setLives(3);
+      setScore(0);
+      setMultiplier(1.0);
+      setSongs(getRandomSongs());
+      setGameStatus("idle");
+    }
+    setActiveTab(target);
+  };
+
   return (
-    <div className="min-h-screen text-stone-800 flex flex-col font-sans antialiased">
+    <div className="min-h-screen text-foreground flex flex-col font-sans antialiased">
       {/* App Header */}
       <Header
         activeTab={activeTab}
-        onSelectTab={setActiveTab}
+        onSelectTab={handleNavigation}
         lives={lives}
         score={score}
         multiplier={multiplier}
+        showHUD={activeTab === "game" && gameStatus !== "idle"}
       />
 
       {/* Main Content Area */}
@@ -48,24 +63,25 @@ export default function Home() {
             score={score}
             multiplier={multiplier}
             onUpdateState={handleUpdateGameState}
-            onViewLeaderboard={() => setActiveTab("leaderboard")}
+            onViewLeaderboard={() => handleNavigation("leaderboard")}
+            onGameStatusChange={setGameStatus}
           />
         ) : (
-          <LeaderboardView onPlayClick={() => setActiveTab("game")} />
+          <LeaderboardView onPlayClick={() => handleNavigation("game")} />
         )}
       </main>
 
       {/* Footer */}
-      <footer className="w-full border-t border-stone-200/70 py-6 px-4 text-center text-xs text-stone-400 flex flex-col items-center justify-center max-w-5xl mx-auto gap-2.5">
+      <footer className="w-full border-t border-stone-800/80 py-6 px-4 text-center text-xs text-stone-500 flex flex-col items-center justify-center max-w-5xl mx-auto gap-2.5 bg-black/30">
         <button
           type="button"
-          onClick={() => setActiveTab("leaderboard")}
-          className="font-semibold text-stone-500 hover:text-amber-700 transition-colors cursor-pointer"
+          onClick={() => handleNavigation(activeTab === 'game' ? 'leaderboard' : 'game')}
+          className="font-bold text-amber-500 hover:text-amber-400 hover:drop-shadow-[0_0_8px_rgba(245,158,11,0.5)] transition-all cursor-pointer tracking-wider uppercase"
         >
-          Ranking Mundial
+          {activeTab === 'game' ? 'Ranking Mundial' : 'Volver a Jugar'}
         </button>
 
-        <div className="flex items-center justify-center gap-1.5">
+        <div className="flex items-center justify-center gap-1.5 opacity-80 hover:opacity-100 transition-opacity">
           <span className="text-sm">🎧</span>
           <span>
             Desarrollado por{' '}
@@ -73,7 +89,7 @@ export default function Home() {
               href="https://www.linkedin.com/in/lucas-chorolqui-319090264/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-bold text-purple-600 hover:text-purple-500 transition-colors underline decoration-purple-200 underline-offset-2"
+              className="font-black text-cyan-400 hover:text-cyan-300 transition-colors drop-shadow-[0_0_5px_rgba(34,211,238,0.5)]"
             >
               Lucas
             </a>

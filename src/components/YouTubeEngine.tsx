@@ -14,6 +14,7 @@ interface YouTubeEngineProps {
   videoId?: string;
   onPlayStateChange: (isPlaying: boolean) => void;
   onProgressChange: (progress: number) => void;
+  onBufferingStateChange?: (isBuffering: boolean) => void;
   onErrorFallback?: () => void;
 }
 
@@ -42,7 +43,7 @@ interface YTPlayerInterface {
 }
 
 export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
-  function YouTubeEngine({ videoId, onPlayStateChange, onProgressChange, onErrorFallback }, ref) {
+  function YouTubeEngine({ videoId, onPlayStateChange, onProgressChange, onErrorFallback, onBufferingStateChange }, ref) {
     const playerRef = useRef<YTPlayerInterface | null>(null);
     const isReadyRef = useRef(false);
     const isSnippetActiveRef = useRef(false);
@@ -56,9 +57,11 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
     const onPlayStateChangeRef = useRef(onPlayStateChange);
     const onProgressChangeRef = useRef(onProgressChange);
     const onErrorFallbackRef = useRef(onErrorFallback);
+    const onBufferingStateChangeRef = useRef(onBufferingStateChange);
     onPlayStateChangeRef.current = onPlayStateChange;
     onProgressChangeRef.current = onProgressChange;
     onErrorFallbackRef.current = onErrorFallback;
+    onBufferingStateChangeRef.current = onBufferingStateChange;
 
     function clearTimers() {
       if (stopTimerRef.current) {
@@ -86,7 +89,7 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
       }
 
       onPlayStateChangeRef.current(false);
-      onProgressChangeRef.current(0);
+      // Keep progress at 100% when finished naturally
     }
 
     function startProgressTracking() {
@@ -177,6 +180,13 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
               },
               onStateChange: (event: { data: number }) => {
                 if (!isMounted) return;
+                
+                if (event.data === 3) {
+                  onBufferingStateChangeRef.current?.(true);
+                } else if (event.data === 1 || event.data === 2 || event.data === 0) {
+                  onBufferingStateChangeRef.current?.(false);
+                }
+
                 // Only react to PLAYING (1) to start our timer.
                 // Ignore PAUSED (2) and ENDED (0) — our timers handle stop.
                 if (event.data === 1 && isSnippetActiveRef.current && progressIntervalRef.current === null) {
@@ -233,25 +243,30 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
           // Stop any previous snippet
           isSnippetActiveRef.current = false;
           clearTimers();
+          onProgressChangeRef.current(0);
 
           targetDurationRef.current = duration;
           startSecondsRef.current = startSeconds;
 
           if (playerRef.current && isReadyRef.current) {
             try {
+              onBufferingStateChangeRef.current?.(true);
               playerRef.current.seekTo(startSeconds, true);
               playerRef.current.setVolume(100);
               isSnippetActiveRef.current = true;
               playerRef.current.playVideo();
               
               if ((playerRef.current as any).getPlayerState && (playerRef.current as any).getPlayerState() === 1 && progressIntervalRef.current === null) {
+                onBufferingStateChangeRef.current?.(false);
                 startProgressTracking();
               }
             } catch {
               isSnippetActiveRef.current = false;
+              onBufferingStateChangeRef.current?.(false);
               onErrorFallbackRef.current?.();
             }
           } else {
+            onBufferingStateChangeRef.current?.(false);
             onErrorFallbackRef.current?.();
           }
         },
@@ -263,11 +278,13 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
 
           if (playerRef.current && isReadyRef.current) {
             try {
+              onBufferingStateChangeRef.current?.(true);
               playerRef.current.seekTo(startSeconds, true);
               playerRef.current.setVolume(100);
               playerRef.current.playVideo();
               onPlayStateChangeRef.current(true);
             } catch {
+              onBufferingStateChangeRef.current?.(false);
               onErrorFallbackRef.current?.();
             }
           }

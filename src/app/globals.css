@@ -1,42 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafaf9;
-  --foreground: #1c1917;
-  --card-bg: #ffffff;
-  --card-border: #f2f2f0;
-  --pastel-lavender: #ede9fe;
-  --pastel-lavender-text: #6d28d9;
-  --pastel-peach: #ffedd5;
-  --pastel-peach-text: #c2410c;
-  --pastel-mint: #d1fae5;
-  --pastel-mint-text: #047857;
-  --pastel-rose: #ffe4e6;
-  --pastel-rose-text: #be123c;
-  --pastel-butter: #fef9c3;
-  --pastel-butter-text: #a16207;
+  --background: #0c0a09;
+  --foreground: #fafaf9;
+  --card-bg: #1c1917;
+  --card-border: #292524;
+  --neon-cyan: #22d3ee;
+  --neon-purple: #a855f7;
+  --neon-fuchsia: #d946ef;
+  --neon-amber: #fcd34d;
 }
 
 body {
-  background-color: #f7f7f5;
+  background-color: var(--background);
   background-image: 
-    linear-gradient(rgba(217, 70, 239, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(217, 70, 239, 0.07) 1px, transparent 1px);
-  background-size: 32px 32px;
-  color: #292524;
+    linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Custom Minimalist Range Slider */
+/* Custom Cyberpunk Range Slider */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
-  background: #e7e5e4;
+  background: #292524;
   border-radius: 9999px;
-  height: 8px;
+  height: 6px;
+  border: 1px solid #44403c;
 }
 
 input[type="range"]:focus {
@@ -49,16 +44,16 @@ input[type="range"]::-webkit-slider-thumb {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #ffffff;
+  background: #0c0a09;
   cursor: grab;
-  border: 2px solid #8b5cf6;
-  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.25), 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 2px solid var(--neon-cyan);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.6), inset 0 0 4px rgba(34, 211, 238, 0.4);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.15);
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.8), inset 0 0 8px rgba(34, 211, 238, 0.6);
 }
 
 input[type="range"]::-webkit-slider-thumb:active {
@@ -70,13 +65,13 @@ input[type="range"]::-moz-range-thumb {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #ffffff;
+  background: #0c0a09;
   cursor: grab;
-  border: 2px solid #8b5cf6;
-  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.25), 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 2px solid var(--neon-cyan);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.6), inset 0 0 4px rgba(34, 211, 238, 0.4);
 }
 
-/* Smooth custom scrollbars */
+/* Cyberpunk Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -85,9 +80,21 @@ input[type="range"]::-moz-range-thumb {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #d6d3d1;
+  background: #44403c;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8a29e;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
 }
+
+@keyframes highlight-flash {
+  0% { background-color: rgba(34, 211, 238, 0.4); box-shadow: inset 0 0 20px rgba(34, 211, 238, 0.5); }
+  50% { background-color: rgba(34, 211, 238, 0.1); box-shadow: inset 0 0 10px rgba(34, 211, 238, 0.2); }
+  100% { background-color: rgba(34, 211, 238, 0.05); box-shadow: inset 0 0 0px transparent; }
+}
+
+.animate-flash-row {
+  animation: highlight-flash 1.2s ease-out forwards;
+}
+
