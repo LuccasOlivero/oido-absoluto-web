@@ -4,8 +4,6 @@ import { INITIAL_SONGS } from './songs-data';
 
 import { createClient } from './supabase/client';
 
-const supabase = createClient();
-
 const LOCAL_STORAGE_LEADERBOARD_KEY = 'oido_absoluto_leaderboard_v3';
 
 const DEFAULT_MOCK_LEADERBOARD: LeaderboardEntry[] = [];
@@ -16,6 +14,7 @@ export async function fetchSongs(): Promise<Song[]> {
 
 export async function fetchLeaderboard(limit = 50): Promise<LeaderboardEntry[]> {
   try {
+    const supabase = createClient();
     const { data, error } = await supabase
       .from('leaderboard')
       .select('*')
@@ -57,6 +56,7 @@ export async function saveLeaderboardScore(entry: {
   songs_guessed: number;
   exact_hits: number;
 }): Promise<LeaderboardEntry | null> {
+  const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) return null; // Only logged in users can save scores
