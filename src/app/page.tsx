@@ -30,14 +30,18 @@ export default function Home() {
     setMultiplier(state.multiplier);
   };
 
+  const handleRestartGame = () => {
+    setLives(3);
+    setScore(0);
+    setMultiplier(1.0);
+    setSongs(getRandomSongs());
+    setGameStatus("idle");
+  };
+
   const handleNavigation = (target: "game" | "leaderboard") => {
     if (target === "game" && lives <= 0) {
       // Reset game state if returning to game after dying
-      setLives(3);
-      setScore(0);
-      setMultiplier(1.0);
-      setSongs(getRandomSongs());
-      setGameStatus("idle");
+      handleRestartGame();
     }
     setActiveTab(target);
   };
@@ -65,6 +69,7 @@ export default function Home() {
             onUpdateState={handleUpdateGameState}
             onViewLeaderboard={() => handleNavigation("leaderboard")}
             onGameStatusChange={setGameStatus}
+            onRestartGame={handleRestartGame}
           />
         ) : (
           <LeaderboardView onPlayClick={() => handleNavigation("game")} />
