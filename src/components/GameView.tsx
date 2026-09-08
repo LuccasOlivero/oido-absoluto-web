@@ -105,10 +105,15 @@ export function GameView({
     if (!currentSong) return;
     const startOffset = (currentSong.preview_start || 0) + 5;
 
-    if (currentSong.youtube_id && youtubeRef.current) {
+    if (currentSong.youtube_id && currentSong.youtube_id !== 'NOT_FOUND' && youtubeRef.current) {
       youtubeRef.current.playSnippet(selectedSnippet, startOffset);
     } else {
       console.warn('[Oído Absoluto] No YouTube ID for song:', currentSong?.title);
+      // Fallback
+      if (audioPlayerRef.current) {
+         // The SnippetAudioPlayer fails gracefully if url is missing
+         audioPlayerRef.current.playSnippet(selectedSnippet, startOffset);
+      }
     }
   };
 
@@ -127,7 +132,7 @@ export function GameView({
       handleStopSnippet();
       setIsPlayingFull(false);
     } else {
-      if (currentSong.youtube_id && youtubeRef.current) {
+      if (currentSong.youtube_id && currentSong.youtube_id !== 'NOT_FOUND' && youtubeRef.current) {
         youtubeRef.current.playFull(currentSong.preview_start || 0);
       } else if (audioPlayerRef.current) {
         audioPlayerRef.current.playFullSong(0);
@@ -143,7 +148,7 @@ export function GameView({
     window.scrollTo({ top: 0, behavior: 'smooth' });
     
     // Play full song directly (synchronously to keep user-gesture context for autoplay)
-    if (currentSong?.youtube_id && youtubeRef.current) {
+    if (currentSong?.youtube_id && currentSong.youtube_id !== 'NOT_FOUND' && youtubeRef.current) {
       youtubeRef.current.playFull(currentSong.preview_start || 0);
       setIsPlayingFull(true);
     } else if (audioPlayerRef.current) {
@@ -280,9 +285,7 @@ export function GameView({
           console.warn('[TimePitch] YouTube playback failed for:', currentSong?.title);
           setIsPlayingSnippet(false);
           setIsBuffering(false);
-          // Show alert and automatically move to next round without losing life
-          alert(`Error al cargar el video de YouTube para "${currentSong?.title}". Saltando a la siguiente canción...`);
-          handleNextRound();
+          setIsPlayingFull(false);
         }}
       />
 
