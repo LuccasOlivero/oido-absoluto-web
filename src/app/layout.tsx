@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TimePitch 👾 | Neon Cyberpunk Arcade",
-  description: "High-octane musical game: scan audio snippets of 1s, 3s or 5s and decode the release year to reach the Global Network.",
+  title: "Oído Absoluto",
+  description: "Adivina el año exacto de tus canciones favoritas. ¿Tienes Oído Absoluto?",
 };
 
 export default function RootLayout({
