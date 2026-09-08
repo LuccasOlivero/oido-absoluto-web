@@ -5,9 +5,12 @@ import { signup } from '../actions'
 import Link from 'next/link'
 import { Loader2 } from 'lucide-react'
 
+import { CountryPicker } from '@/components/CountryPicker'
+
 export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [selectedCountry, setSelectedCountry] = useState('AUTO')
 
   async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -63,6 +66,12 @@ export default function RegisterPage() {
               maxLength={24}
               className="w-full px-4 py-3 bg-black text-fuchsia-400 font-mono rounded-xl border border-fuchsia-900/50 focus:outline-none focus:ring-2 focus:ring-fuchsia-500/50 text-sm placeholder-fuchsia-900/50 shadow-[inset_0_0_10px_rgba(217,70,239,0.1)]"
               placeholder="Ej: Melómano77"
+            />
+          </div>
+          <div>
+            <CountryPicker
+              selectedCode={selectedCountry}
+              onSelect={(country) => setSelectedCountry(country.code)}
             />
           </div>
           <div>

@@ -92,11 +92,14 @@ export async function signup(formData: FormData) {
   }
 
   // Detect country
-  let countryCode = 'AR'
-  try {
-    countryCode = await detectCountryCode()
-  } catch (err) {
-    // fallback
+  let countryCode = formData.get('country_code') as string
+  if (!countryCode || countryCode === 'AUTO') {
+    countryCode = 'AR'
+    try {
+      countryCode = await detectCountryCode()
+    } catch (err) {
+      // fallback
+    }
   }
 
   if (authData.user) {
