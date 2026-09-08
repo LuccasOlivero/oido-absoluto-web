@@ -24,6 +24,7 @@ interface GameViewProps {
   }) => void;
   onViewLeaderboard: () => void;
   onGameStatusChange?: (status: GameStatus) => void;
+  onRestartGame: () => void;
 }
 
 export function GameView({
@@ -33,7 +34,8 @@ export function GameView({
   multiplier,
   onUpdateState,
   onViewLeaderboard,
-  onGameStatusChange
+  onGameStatusChange,
+  onRestartGame
 }: GameViewProps) {
   const currentYear = new Date().getFullYear();
 
@@ -257,6 +259,9 @@ export function GameView({
       songsGuessed: 0,
       exactHits: 0
     });
+    
+    // Reshuffle songs in parent
+    onRestartGame();
   };
 
   return (
