@@ -8,17 +8,17 @@ import { detectCountryCode } from '@/lib/geo'
 import { z } from 'zod'
 
 const signupSchema = z.object({
-  email: z.string().email('Correo inválido.'),
-  player_name: z.string()
+  email: z.string({ required_error: 'El correo es requerido.', invalid_type_error: 'El correo es requerido.' }).email('Correo inválido.'),
+  player_name: z.string({ required_error: 'El apodo es requerido.', invalid_type_error: 'El apodo es requerido.' })
     .min(3, 'El apodo debe tener al menos 3 caracteres.')
     .max(20, 'El apodo no puede tener más de 20 caracteres.')
     .regex(/^[a-zA-Z0-9_]+$/, 'El apodo solo puede contener letras, números y guiones bajos.'),
-  password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres.'),
+  password: z.string({ required_error: 'La contraseña es requerida.', invalid_type_error: 'La contraseña es requerida.' }).min(6, 'La contraseña debe tener al menos 6 caracteres.'),
 })
 
 const loginSchema = z.object({
-  player_name: z.string().min(1, 'El apodo es requerido.'),
-  password: z.string().min(1, 'La contraseña es requerida.'),
+  player_name: z.string({ required_error: 'El apodo es requerido.', invalid_type_error: 'El apodo es requerido.' }).min(1, 'El apodo es requerido.').max(20, 'El apodo no puede tener más de 20 caracteres.'),
+  password: z.string({ required_error: 'La contraseña es requerida.', invalid_type_error: 'La contraseña es requerida.' }).min(1, 'La contraseña es requerida.'),
 })
 
 export async function login(formData: FormData) {
@@ -100,8 +100,12 @@ export async function signup(formData: FormData) {
   }
 
   if (authData.user) {
-    // Insert profile
-    const { error: profileError } = await supabase.from('profiles').insert({
+    // Insert profile using admin client to bypass RLS
+    const adminSupabase = createAdminClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+    const { error: profileError } = await adminSupabase.from('profiles').insert({
       id: authData.user.id,
       player_name: playerName,
       country_code: countryCode
