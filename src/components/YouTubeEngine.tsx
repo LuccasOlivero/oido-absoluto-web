@@ -39,6 +39,8 @@ interface YTPlayerInterface {
   loadVideoById: (options: { videoId: string; startSeconds?: number }) => void;
   setVolume: (volume: number) => void;
   getVolume: () => number;
+  unMute: () => void;
+  mute: () => void;
   destroy: () => void;
 }
 
@@ -81,7 +83,6 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
 
       if (playerRef.current && isReadyRef.current) {
         try {
-          playerRef.current.setVolume(0);
           playerRef.current.pauseVideo();
         } catch {
           // ignore
@@ -187,10 +188,17 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
                   onBufferingStateChangeRef.current?.(false);
                 }
 
-                // Only react to PLAYING (1) to start our timer.
-                // Ignore PAUSED (2) and ENDED (0) — our timers handle stop.
-                if (event.data === 1 && isSnippetActiveRef.current && progressIntervalRef.current === null) {
-                  startProgressTracking();
+                if (event.data === 2 || event.data === 0) {
+                  isSnippetActiveRef.current = false;
+                  clearTimers();
+                  onPlayStateChangeRef.current(false);
+                }
+
+                if (event.data === 1) {
+                  onPlayStateChangeRef.current(true);
+                  if (isSnippetActiveRef.current && progressIntervalRef.current === null) {
+                    startProgressTracking();
+                  }
                 }
               },
               onError: (event: { data: number }) => {
