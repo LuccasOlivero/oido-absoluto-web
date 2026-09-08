@@ -138,6 +138,8 @@ export function GameView({
   const handleConfirmYear = () => {
     if (!currentSong) return;
     
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
     // Play full song directly (synchronously to keep user-gesture context for autoplay)
     if (currentSong?.youtube_id && youtubeRef.current) {
       youtubeRef.current.playFull(currentSong.preview_start || 0);
@@ -226,6 +228,7 @@ export function GameView({
 
   // Next round setup
   const handleNextRound = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     handleStopSnippet();
     setIsPlayingFull(false);
     setGameStatus('playing');
@@ -237,6 +240,7 @@ export function GameView({
 
   // Play Again restart
   const handleRestart = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     handleStopSnippet();
     setIsPlayingFull(false);
     setGameStatus('idle');
