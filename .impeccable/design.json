@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-04T17:26:00Z",
+  "title": "Design System: Oído Absoluto",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Vibrant Purple", "canonical": "#8b5cf6" },
+      "background": { "role": "neutral", "displayName": "Stone Background", "canonical": "#f7f7f5" },
+      "pastel-lavender": { "role": "secondary", "displayName": "Pastel Lavender", "canonical": "#ede9fe" }
+    },
+    "typographyMeta": {
+      "body": { "displayName": "Geist Sans", "purpose": "Standard text throughout the interface." },
+      "label": { "displayName": "Geist Mono", "purpose": "Precise information and scoring." }
+    },
+    "shadows": [
+      { "name": "thumb-shadow", "value": "0 2px 8px rgba(139, 92, 246, 0.25)", "purpose": "Tactile feedback for the slider thumb." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "ease", "purpose": "Smooth, refined component transitions." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Slider Thumb",
+      "kind": "custom",
+      "refersTo": "slider-thumb",
+      "description": "Tactile slider thumb used for the minimalist range input.",
+      "html": "<div class=\"ds-slider-container\"><input type=\"range\" class=\"ds-range\" /></div>",
+      "css": ".ds-range { -webkit-appearance: none; background: #e7e5e4; border-radius: 9999px; height: 8px; width: 100%; outline: none; } .ds-range::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #ffffff; cursor: grab; border: 2px solid #8b5cf6; box-shadow: 0 2px 8px rgba(139, 92, 246, 0.25), 0 1px 3px rgba(0, 0, 0, 0.08); transition: transform 0.15s ease, box-shadow 0.15s ease; } .ds-range::-webkit-slider-thumb:hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Playful Arcade",
+    "overview": "Oído Absoluto balances a bright, engaging, game-focused atmosphere with the rigor of ear training. The aesthetic is joyful, accessible, and fast-paced, ensuring the barrier to entry is extremely low. It leverages a soft stone background combined with a subtle purple grid to evoke a structured but creative space, punctuated by vibrant primary colors and pastel accents.",
+    "keyCharacteristics": [
+      "Bright, engaging, and clearly game-focused.",
+      "Fast-paced and highly accessible.",
+      "Uses subtle background patterns (grid) to add texture without distraction.",
+      "Relies on flat design with pastel accents over heavy drop shadows."
+    ],
+    "rules": [
+      { "name": "The Flat Color Hierarchy Rule", "body": "Areas of interest are distinguished by subtle pastel background fills rather than elevation or heavy outlines.", "section": "colors" },
+      { "name": "The Flat-by-Default Rule", "body": "Surfaces rest flat on the canvas. Instead of using shadows to lift cards, we use soft pastel background colors to define areas. Shadows are reserved exclusively for tiny, highly tactile interactive elements (like the slider thumb).", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use pastel backgrounds to distinguish functional areas.",
+      "Do keep interactive elements feeling refined and smooth.",
+      "Do maintain the subtle purple grid on the main background for texture."
+    ],
+    "donts": [
+      "Don't add heavy drop shadows to cards or general containers.",
+      "Don't use overly complex gradients; stick to solid pastels and clear primary accents."
+    ]
+  }
+}
