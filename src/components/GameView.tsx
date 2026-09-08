@@ -137,15 +137,14 @@ export function GameView({
   // Confirm guess calculation
   const handleConfirmYear = () => {
     if (!currentSong) return;
-    handleStopSnippet();
     
-    // Slight delay to prevent pauseVideo / playVideo race condition in YouTube IFrame API
-    setTimeout(() => {
-      if (currentSong?.youtube_id && youtubeRef.current) {
-        youtubeRef.current.playFull(currentSong.preview_start || 0);
-        setIsPlayingFull(true);
-      }
-    }, 150);
+    // Play full song directly (synchronously to keep user-gesture context for autoplay)
+    if (currentSong?.youtube_id && youtubeRef.current) {
+      youtubeRef.current.playFull(currentSong.preview_start || 0);
+      setIsPlayingFull(true);
+    } else if (audioPlayerRef.current) {
+      audioPlayerRef.current.stop();
+    }
 
     const actualYear = currentSong.year;
     const yearDiff = Math.abs(selectedYear - actualYear);
