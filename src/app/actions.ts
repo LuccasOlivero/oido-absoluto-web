@@ -117,7 +117,8 @@ export async function signup(formData: FormData) {
     }
   }
 
-  return { success: '¡Cuenta creada! Por favor, verifica tu correo electrónico para confirmar y activar tu cuenta.' }
+  revalidatePath('/', 'layout')
+  redirect('/')
 }
 
 export async function logout() {
