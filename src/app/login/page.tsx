@@ -3,14 +3,17 @@
 import { useState } from 'react'
 import { login } from '../actions'
 import Link from 'next/link'
+import { Loader2 } from 'lucide-react'
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(formData: FormData) {
+  async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
     setLoading(true)
     setError(null)
+    const formData = new FormData(e.currentTarget)
     const result = await login(formData)
     if (result?.error) {
       setError(result.error)
@@ -36,7 +39,7 @@ export default function LoginPage() {
           </div>
         )}
 
-        <form action={handleSubmit} className="flex flex-col gap-5">
+        <form onSubmit={handleFormSubmit} className="flex flex-col gap-5">
           <div>
             <label className="block text-[11px] font-bold uppercase tracking-widest text-cyan-600 mb-1">
               Identificación (Apodo)
@@ -65,9 +68,16 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-2 py-3 px-5 rounded-xl bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-black uppercase tracking-widest text-sm shadow-[0_0_15px_rgba(245,158,11,0.4)] active:scale-95 transition-all disabled:opacity-50 disabled:grayscale cursor-pointer border border-amber-400/50"
+            className="w-full flex items-center justify-center gap-2 mt-2 py-3 px-5 rounded-xl bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-black uppercase tracking-widest text-sm shadow-[0_0_15px_rgba(245,158,11,0.4)] active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer border border-amber-400/50"
           >
-            {loading ? 'AUTENTICANDO...' : 'INICIAR SESIÓN'}
+            {loading ? (
+              <>
+                <Loader2 className="animate-spin w-4 h-4" />
+                <span>AUTENTICANDO...</span>
+              </>
+            ) : (
+              'INICIAR SESIÓN'
+            )}
           </button>
         </form>
 
