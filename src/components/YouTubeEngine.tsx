@@ -259,12 +259,19 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
           if (playerRef.current && isReadyRef.current) {
             try {
               onBufferingStateChangeRef.current?.(true);
-              playerRef.current.seekTo(startSeconds, true);
-              playerRef.current.setVolume(100);
-              isSnippetActiveRef.current = true;
-              playerRef.current.playVideo();
               
-              if ((playerRef.current as any).getPlayerState && (playerRef.current as any).getPlayerState() === 1 && progressIntervalRef.current === null) {
+              const state = (playerRef.current as any).getPlayerState?.();
+              
+              playerRef.current.unMute();
+              playerRef.current.setVolume(100);
+              playerRef.current.seekTo(startSeconds, true);
+              
+              isSnippetActiveRef.current = true;
+              
+              if (state !== 1) {
+                playerRef.current.playVideo();
+              } else if (progressIntervalRef.current === null) {
+                // If it was already playing, it will just seek and continue
                 onBufferingStateChangeRef.current?.(false);
                 startProgressTracking();
               }
@@ -287,9 +294,16 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
           if (playerRef.current && isReadyRef.current) {
             try {
               onBufferingStateChangeRef.current?.(true);
-              playerRef.current.seekTo(startSeconds, true);
+              
+              const state = (playerRef.current as any).getPlayerState?.();
+              
+              playerRef.current.unMute();
               playerRef.current.setVolume(100);
-              playerRef.current.playVideo();
+              playerRef.current.seekTo(startSeconds, true);
+              
+              if (state !== 1) {
+                playerRef.current.playVideo();
+              }
               onPlayStateChangeRef.current(true);
             } catch {
               onBufferingStateChangeRef.current?.(false);
