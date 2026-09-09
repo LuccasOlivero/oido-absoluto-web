@@ -48,6 +48,7 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
   function YouTubeEngine({ videoId, onPlayStateChange, onProgressChange, onErrorFallback, onBufferingStateChange }, ref) {
     const playerRef = useRef<YTPlayerInterface | null>(null);
     const isReadyRef = useRef(false);
+    const pendingCueRef = useRef<{ videoId: string; startSeconds: number } | null>(null);
     const isSnippetActiveRef = useRef(false);
     const stopTimerRef = useRef<NodeJS.Timeout | null>(null);
     const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -170,11 +171,11 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
               onReady: () => {
                 if (isMounted) {
                   isReadyRef.current = true;
-                  // @ts-ignore
-                  const pending = playerRef.current?.__pendingCue;
+                  const pending = pendingCueRef.current;
                   if (pending && playerRef.current?.cueVideoById) {
                     try {
                       playerRef.current.cueVideoById(pending);
+                      pendingCueRef.current = null;
                     } catch {}
                   }
                 }
@@ -337,10 +338,7 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
             }
           } else {
             // Player not ready yet, store it so onReady can cue it
-            // @ts-ignore
-            playerRef.current = playerRef.current || {};
-            // @ts-ignore
-            playerRef.current.__pendingCue = { videoId: newVideoId, startSeconds };
+            pendingCueRef.current = { videoId: newVideoId, startSeconds };
           }
         }
       }),
