@@ -5,7 +5,7 @@ import { SnippetDuration } from '@/types';
 
 export interface YouTubeEngineRef {
   playSnippet: (duration: SnippetDuration, startSeconds?: number) => void;
-  playFull: (startSeconds?: number) => void;
+  playFull: (videoId: string, startSeconds?: number) => void;
   stop: () => void;
   cueSong: (videoId: string, startSeconds?: number) => void;
 }
@@ -286,7 +286,7 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
             onErrorFallbackRef.current?.();
           }
         },
-        playFull: (startSeconds = 0) => {
+        playFull: (videoId: string, startSeconds = 0) => {
           isSnippetActiveRef.current = false;
           clearTimers();
           targetDurationRef.current = 999;
@@ -296,15 +296,15 @@ export const YouTubeEngine = forwardRef<YouTubeEngineRef, YouTubeEngineProps>(
             try {
               onBufferingStateChangeRef.current?.(true);
               
-              const state = (playerRef.current as any).getPlayerState?.();
-              
               playerRef.current.unMute();
               playerRef.current.setVolume(100);
-              playerRef.current.seekTo(startSeconds, true);
               
-              if (state !== 1) {
-                playerRef.current.playVideo();
-              }
+              // Use loadVideoById to force a clean play cycle
+              playerRef.current.loadVideoById({
+                videoId: videoId,
+                startSeconds: startSeconds
+              });
+              
               onPlayStateChangeRef.current(true);
             } catch {
               onBufferingStateChangeRef.current?.(false);

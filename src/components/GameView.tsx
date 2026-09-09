@@ -133,7 +133,7 @@ export function GameView({
       setIsPlayingFull(false);
     } else {
       if (currentSong.youtube_id && currentSong.youtube_id !== 'NOT_FOUND' && youtubeRef.current) {
-        youtubeRef.current.playFull(currentSong.preview_start || 0);
+        youtubeRef.current.playFull(currentSong.youtube_id, currentSong.preview_start || 0);
       } else if (audioPlayerRef.current) {
         audioPlayerRef.current.playFullSong(0);
       }
@@ -149,7 +149,7 @@ export function GameView({
     
     // Play full song directly (synchronously to keep user-gesture context for autoplay)
     if (currentSong?.youtube_id && currentSong.youtube_id !== 'NOT_FOUND' && youtubeRef.current) {
-      youtubeRef.current.playFull(currentSong.preview_start || 0);
+      youtubeRef.current.playFull(currentSong.youtube_id, currentSong.preview_start || 0);
       setIsPlayingFull(true);
     } else if (audioPlayerRef.current) {
       audioPlayerRef.current.stop();
