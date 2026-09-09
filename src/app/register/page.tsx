@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { signup } from '../actions'
 import Link from 'next/link'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Eye, EyeOff } from 'lucide-react'
 
 import { CountryPicker } from '@/components/CountryPicker'
 
@@ -11,12 +11,22 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [selectedCountry, setSelectedCountry] = useState('AUTO')
+  const [showPassword, setShowPassword] = useState(false)
 
   async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setLoading(true)
     setError(null)
     const formData = new FormData(e.currentTarget)
+
+    const password = formData.get('password') as string
+    const confirmPassword = formData.get('confirm_password') as string
+    if (password !== confirmPassword) {
+      setError('Las contraseñas no coinciden')
+      setLoading(false)
+      return
+    }
+
     const result = await signup(formData)
     if (result?.error) {
       setError(result.error)
@@ -78,14 +88,38 @@ export default function RegisterPage() {
             <label className="block text-[11px] font-bold uppercase tracking-widest text-amber-600 mb-1">
               Clave de Acceso
             </label>
-            <input
-              type="password"
-              name="password"
-              required
-              minLength={6}
-              className="w-full px-4 py-3 bg-black text-amber-400 font-mono rounded-xl border border-amber-900/50 focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-sm placeholder-amber-900/50 shadow-[inset_0_0_10px_rgba(245,158,11,0.1)]"
-              placeholder="Mínimo 6 caracteres"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                required
+                minLength={6}
+                className="w-full px-4 py-3 bg-black text-amber-400 font-mono rounded-xl border border-amber-900/50 focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-sm placeholder-amber-900/50 shadow-[inset_0_0_10px_rgba(245,158,11,0.1)] pr-12"
+                placeholder="Mínimo 6 caracteres"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-amber-600 hover:text-amber-400 transition-colors"
+              >
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            </div>
+          </div>
+          <div>
+            <label className="block text-[11px] font-bold uppercase tracking-widest text-amber-600 mb-1">
+              Confirmar Clave de Acceso
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="confirm_password"
+                required
+                minLength={6}
+                className="w-full px-4 py-3 bg-black text-amber-400 font-mono rounded-xl border border-amber-900/50 focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-sm placeholder-amber-900/50 shadow-[inset_0_0_10px_rgba(245,158,11,0.1)] pr-12"
+                placeholder="Repite la clave"
+              />
+            </div>
           </div>
 
           <button
