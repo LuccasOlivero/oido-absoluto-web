@@ -105,7 +105,7 @@ export async function saveLeaderboardScore(entry: {
       return data as LeaderboardEntry;
     }
   } catch (e) {
-    console.error('Failed to save to Supabase:', e);
+    console.error('Failed to save to Supabase. Full error:', JSON.stringify(e, null, 2), e);
     return null;
   }
 }
